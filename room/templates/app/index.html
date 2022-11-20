@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <h1>Group Name: {{group_name}}</h1>
+    <textarea name="" id="chat-log" cols="79" rows="20">
+        {% for c in chats %}
+            {{c.content}}
+        {% endfor %}
+    </textarea><br>
+    <input type="text" name="" id="chat-msg-input" size="84"><br>
+    <input type="submit" style="margin-top: 4px;" value="submit" id="chat-msg-submit" size="100">
+
+    <!-- used to get group name from template context in javascript -->
+    {{group_name|json_script:"group-name"}}
+    <script>
+        const group_name = JSON.parse(document.getElementById('group-name').textContent);
+        console.log(group_name);
+
+        var ws = new WebSocket('ws://' + window.location.host + '/ws/awsc/' + group_name + '/')
+        // var ws = new WebSocket('ws://' + window.location.host + '/ws/awsc/' + group_name + '/')
+
+        ws.onopen = () => {
+            console.log('websocket connection open..');
+            // ws.send('hi,message from client')
+        }
+
+        ws.onmessage = (e) => {
+            console.log('message received from server..\n', e.data);
+            const data=JSON.parse(e.data)
+            document.querySelector('#chat-log').value+=(data.msg+'\n');
+        }
+
+        document.getElementById('chat-msg-submit').onclick=(e)=>{
+            const message=document.getElementById('chat-msg-input').value;
+            ws.send(JSON.stringify({'msg':message}))
+            document.getElementById('chat-msg-input').value=''
+        }
+        // ws.onerror=(e)=>{
+        //     console.log('websocket error..',e);
+        // }
+        // ws.onclose=(e)=>{
+        //     console.log('websocket connection closed..',e);
+        // }
+    </script>
+</body>
+
+</html>
