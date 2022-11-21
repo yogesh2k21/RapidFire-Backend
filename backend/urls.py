@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework.authtoken.views import obtain_auth_token
+from account.views import signup
+# from rest_framewor import ( TokenRefreshView )
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("",include("room.urls"))
+    path("room/",include("room.urls")),
+    path('login/', obtain_auth_token, name='get_token'),
+    # path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('signup/',signup,name='signup'),
 ]

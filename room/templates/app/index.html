@@ -24,9 +24,16 @@
         const group_name = JSON.parse(document.getElementById('group-name').textContent);
         console.log(group_name);
 
-        var ws = new WebSocket('ws://' + window.location.host + '/ws/awsc/' + group_name + '/')
-        // var ws = new WebSocket('ws://' + window.location.host + '/ws/awsc/' + group_name + '/')
+        let newurl='ws://'+window.location.host+'/ws/awsc/room/';
+        const parts=window.location.href.split('?')
+        console.log(parts);
+        newurl=newurl+'?'+parts[1];
+        console.log(newurl);
 
+        const url='ws://' + window.location.host + '/ws/awsc/' + group_name + '/';
+        var ws = new WebSocket(url)
+        // var ws = new WebSocket('ws://' + window.location.host + '/ws/awsc/' + group_name + '/')
+        // console.log(url);
         ws.onopen = () => {
             console.log('websocket connection open..');
             // ws.send('hi,message from client')
