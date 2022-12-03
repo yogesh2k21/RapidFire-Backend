@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'channels',
     'django.contrib.admin',
+    # 'crispy_forms',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -55,7 +56,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
-
+# BASE_DIR / "templates"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -74,8 +75,12 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'backend.asgi.application'
 # WSGI_APPLICATION = 'backend.wsgi.application'
-
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # AUTH_USER_MODEL='account.MyUser'
+
+# where to redirect user after login
+# LOGIN_REDIRECT_URL = '/room/'
+# LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

@@ -8,7 +8,7 @@ import json
 from asgiref.sync import async_to_sync  # used in sync version to make async to sync
 from channels.db import database_sync_to_async
 
-
+'''
 class CustomSyncConsumer(WebsocketConsumer):
     def connect(self):
         print("web socket connected....")
@@ -58,7 +58,7 @@ class CustomSyncConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_discard)(
             self.group_name, self.channel_name
         )
-
+'''
 
 class CustomAsyncConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -76,15 +76,13 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print("Message received from client...", text_data)
         data = json.loads(text_data)
         print(data)
-        message = data["msg"]
-        # group=await database_sync_to_async(Group.objects.get)(name=self.group_name)
-        # chat=Chat(content=message,group=group)
-        # await database_sync_to_async(chat.save)()
-        # response={
-        #     'type':'chat.message',
-        #     'message':message
-        # }
-        # await self.channel_layer.group_send(self.group_name,response)
+        status=data["status"]
+        print(status)
+        try:
+            message = data["message"]
+        except:
+            message=""
+            
         if self.scope["user"].is_authenticated:
             group = await database_sync_to_async(Group.objects.get)(
                 name=self.group_name
@@ -94,11 +92,11 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             response = {"type": "chat.message", "message": message}
             await self.channel_layer.group_send(self.group_name, response)
         else:
-            await self.send(text_data=json.dumps({"msg": "Login Required"}))
+            await self.send(text_data=json.dumps({"message": "Login Required"}))
 
     async def chat_message(self, event):
         print("Event..", event)
-        await self.send(text_data=json.dumps({"msg": event["message"]}))
+        await self.send(text_data=json.dumps({"message": event["message"]}))
 
     async def disconnect(self, code):
         print("web socket disconnected ", code)

@@ -10,3 +10,6 @@ def index(request,group_name):
         print('Existing Group')
     chats=Chat.objects.filter(group=group)
     return render(request,'app/index.html',{'group_name':group_name,'chats':chats})
+
+def home(request):
+    return render(request,'app/home.html')

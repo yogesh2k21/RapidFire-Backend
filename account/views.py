@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 import json
 from django.http import JsonResponse
 from django.contrib.auth.models import BaseUserManager,AbstractUser,User
+from django.shortcuts import render
+
 # from .models import MyUser
 
 
@@ -32,6 +34,11 @@ from django.contrib.auth.models import BaseUserManager,AbstractUser,User
 # class MyTokenObtainPairView(TokenObtainPairView):
 #     serializer_class = MyTokenObtainPairSerializer
 
+def host_login(request):
+    return render(request,'login.html')
+
+
+# signup ka bhi page bnega
 @api_view(['POST'])
 def signup(request):
     # print(request.body)
