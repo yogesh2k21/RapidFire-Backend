@@ -1,13 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
+    <title>Host Login</title>
 </head>
+
 <body>
-    Create Room for Quiz <br>
-    yaha pe create and join room ka page bnana h
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+
+                <img src="{% static 'logo.png' %}" height="50px" width="50px" style="border-radius:50%;">
+
+                <span class="ml-3 text-xl">IQ Tester</span>
+            </a>
+            <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                <a class="mr-5 cursor-pointer hover:text-indigo-900">Dashboard</a>
+                <a class="mr-5 cursor-pointer hover:text-indigo-900">Quizes</a>
+                <a class="mr-5 cursor-pointer hover:text-indigo-900">Contact</a>
+                <a class="mr-5 cursor-pointer hover:text-indigo-900">About us</a>
+            </nav>
+            <button
+                class="inline-flex items-center bg-indigo-100 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-200 rounded text-base mt-4 md:mt-0">Logout
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+    <hr style="border:none;
+  height: 20px;
+ 	width: 95%;
+	height: 50px;
+	margin-top: 0;
+	border-bottom: 1px solid #1f1209;
+	box-shadow: 0 20px 20px -20px #333;
+  margin: -50px auto 10px; ">
+
 </body>
+
 </html>
