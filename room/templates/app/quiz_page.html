@@ -1,0 +1,69 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+    <h1>Group Name: {{group_name}}</h1>
+    <textarea disabled name="" id="chat-log" cols="79" rows="20">
+        {% for c in chats %}
+            {{c.content}}
+        {% endfor %}
+    </textarea
+    ><br />
+    <input type="text" name="" id="chat-message-input" size="84" /><br />
+    <input
+      type="submit"
+      style="margin-top: 4px"
+      value="submit"
+      id="chat-message-submit"
+      size="100"
+    />
+
+    <!-- used to get group name from template context in javascript -->
+    {{group_name|json_script:"group-name"}}
+    <script>
+        document.getElementById("chat-log").scrollTop = 1000;
+
+      const group_name = JSON.parse(
+        document.getElementById("group-name").textContent
+      );
+      console.log(group_name);
+    //     console.log(window.location.href)
+        console.log(window.location.host)
+    //   const urlist = window.location.href.split("?");
+      const token = localStorage.getItem("token")
+      console.log(token)
+      const url =
+        "ws://" +
+        window.location.host +
+        "/ws/awsc/room/quiz/" +
+        group_name +
+        "/?" +
+        token;
+      var ws = new WebSocket(url);
+      
+      ws.onopen = () => {
+        console.log("websocket connection open..");
+        ws.send(JSON.stringify({ status: "Client Connected" }))
+      };
+
+      ws.onmessage = (e) => {
+        console.log("message received from server..\n", e.data);
+        const data = JSON.parse(e.data);
+        document.querySelector("#chat-log").value += data.message + "\n";
+        
+        document.getElementById("chat-log").scrollTop = 1000;
+      };
+
+      document.getElementById("chat-message-submit").onclick = (e) => {
+        const message = document.getElementById("chat-message-input").value;
+        ws.send(JSON.stringify({ message: message }));
+        document.getElementById("chat-message-input").value = "";
+      };
+      // ws.onerror=(e)=>{
+      //     console.log('websocket error..',e);
+      // }
+      // ws.onclose=(e)=>{
+      //     console.log('websocket connection closed..',e);
+      // }
+    </script>
+
+{% endblock content %}

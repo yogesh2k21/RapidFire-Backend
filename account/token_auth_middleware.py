@@ -9,8 +9,11 @@ def get_user(scope):
     #to use JWT we have to just modify is get_user, we only have to find user
     try:
         x=scope
-        # print(x)
-        token_key=parse_qs(scope['query_string'].decode("utf8"))["token"][0]
+        print(scope['query_string'].decode("utf8"))
+        token_key=parse_qs(scope['query_string'].decode("utf8"))
+
+        # this code is take token from url parameter after "?token=dasndkasncj" like this
+        # token_key=parse_qs(scope['query_string'].decode("utf8"))["token"][0]
         print("chl gya code")
         token=Token.objects.get(key=token_key)
         return token.user
