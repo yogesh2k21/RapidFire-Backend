@@ -12,6 +12,14 @@
 
 <body>
   <script>
+    function useEffect() { 
+      if(localStorage.getItem("token")){
+        location.replace("http://localhost:8000/room/") 
+        return
+      }
+    }
+    //this will check if token is set then don't put the host again on this page
+    useEffect();
     const handleLogin = async () => {
       const username = document.getElementById("Username").value;
       const password = document.getElementById("Password").value;
@@ -24,18 +32,26 @@
 
       const response = await fetch(URL,
       {
-        method: "post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // body: {
-          //   "username":username,
-          //   "password":password
-          // }
         },
+        body: JSON.stringify({
+            "username":username,
+            "password":password
+        }),
       }
     ); //request end
     const resp = await response.json();
     console.log(resp);
+    if(resp.token){
+      localStorage.setItem("token",resp.token)
+      location.replace("http://localhost:8000/room/") 
+    }else{
+      alert("Internal Server Error!!")
+      location.replace("http://localhost:8000/account/host-login/") 
+      return
+    }
     }
   </script>
   <section class="h-screen">
