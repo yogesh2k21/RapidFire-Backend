@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,20 +24,16 @@ SECRET_KEY = 'django-insecure-$tu5&7s486o1n3*arodt*v7+^mpi7xf*dtp!a2u51^h)x$*+t8
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# CORS_ORIGIN_ALLOW_ALL = True
 
-ALLOWED_HOSTS=['localhost']
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-       'http://localhost:8000',
-)
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'channels',
     'django.contrib.admin',
-    'corsheaders',
+    # 'crispy_forms',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -141,12 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
