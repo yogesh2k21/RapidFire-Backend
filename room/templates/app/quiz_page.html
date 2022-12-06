@@ -54,7 +54,7 @@
                 <td class="">
                   <div class="flex ml-6 mt-5">
                     <label class="inline-flex relative items-center mb-4 cursor-pointer">
-                      <input type="checkbox" value="false" id="cop1" class="sr-only peer">
+                      <input type="checkbox" value="true" id="cop1" class="sr-only peer">
                       <div
                         class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                       </div>
@@ -85,7 +85,7 @@
                 <td class="">
                   <div class="flex ml-6 mt-5">
                     <label class="inline-flex relative items-center mb-4 cursor-pointer">
-                      <input type="checkbox" value="" id="cop2" class="sr-only peer">
+                      <input type="checkbox" value="true" id="cop2" class="sr-only peer">
                       <div
                         class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                       </div>
@@ -116,7 +116,7 @@
                 <td class="">
                   <div class="flex ml-6 mt-5">
                     <label class="inline-flex relative items-center mb-4 cursor-pointer">
-                      <input type="checkbox" value="" id="cop3" class="sr-only peer">
+                      <input type="checkbox" value="true" id="cop3" class="sr-only peer">
                       <div
                         class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                       </div>
@@ -147,7 +147,7 @@
                 <td class="">
                   <div class="flex ml-6 mt-5">
                     <label class="inline-flex relative items-center mb-4 cursor-pointer">
-                      <input type="checkbox" value="" id="cop4" class="sr-only peer">
+                      <input type="checkbox" value="true" id="cop4" class="sr-only peer">
                       <div
                         class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                       </div>
@@ -163,7 +163,7 @@
           </table>
         </div>
         <div class="flex justify-center mt-5">
-          <button type="submit"
+          <button type="submit" onclick="postQuestion()"
             class="flex text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Post
             <svg class="h-6 w-6 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
@@ -189,10 +189,38 @@
 {{group_name|json_script:"group-name"}}
 <script>
 
-function clearinput(id) {
-  console.log(id)
-  document.getElementById(id).value="";
-}
+  function clearinput(id) {
+    console.log(id)
+    let v = document.getElementById('c' + id).checked;
+    console.log(v)
+    document.getElementById(id).value = "";
+  }
+
+  function postQuestion() {
+    const Q = document.getElementById('question').value;
+    const op1 = document.getElementById('op1').value;
+    const op2 = document.getElementById('op2').value;
+    const op3 = document.getElementById('op3').value;
+    const op4 = document.getElementById('op4').value;
+    const cop1 = document.getElementById('cop1').checked;
+    const cop2 = document.getElementById('cop2').checked;
+    const cop3 = document.getElementById('cop3').checked;
+    const cop4 = document.getElementById('cop4').checked;
+    const temp = {
+      question: Q,
+      answers: [
+        { "op1": op1, "correct": cop1 },
+        { "op2": op2, "correct": cop2 },
+        { "op3": op3, "correct": cop3 },
+        { "op4": op4, "correct": cop4 },
+      ]
+    }
+    console.log(temp.answers[0]["op1"])
+    console.log(temp)
+    const data=JSON.stringify(temp)
+    console.log(data)
+    ws.send(JSON.stringify({ status: "Client Connected", message: data }));
+  }
 
   function enterSubmit(e) {
     if ((e && e.keyCode == 13) || e == 0) {

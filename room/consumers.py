@@ -74,9 +74,20 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def receive(self, text_data=None, bytes_data=None):
-        print("Message received from client...", text_data)
+        print("Message received from client...", text_data,type(text_data))
         data = json.loads(text_data)
+        print(type(data))
         print(data)
+
+        # print(message[0])
+        try:
+            quiz_data=json.loads(data["message"]) 
+            question=quiz_data["question"]
+            options=quiz_data["answers"]
+            print('question',question)
+            print('options',options)
+        except:
+            pass
         status=data["status"]
         print(status)
         try:
