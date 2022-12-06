@@ -7,6 +7,7 @@ import asyncio
 import json
 from asgiref.sync import async_to_sync  # used in sync version to make async to sync
 from channels.db import database_sync_to_async
+from django.contrib.auth.decorators import login_required
 
 '''
 class CustomSyncConsumer(WebsocketConsumer):
@@ -83,6 +84,8 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         except:
             message=""
             
+        print(self.scope["user"])
+        # user=MyUser.objects.get()
         if self.scope["user"].is_authenticated:
             group = await database_sync_to_async(Group.objects.get)(
                 name=self.group_name

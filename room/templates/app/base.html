@@ -13,6 +13,20 @@
 <style>
 </style>
 <body class="h-screen">
+  <script>
+    function useEffect() { 
+      if(!localStorage.getItem("token")){
+        location.replace("http://localhost:8000/account/host-login/") 
+        return
+      }
+    }
+    //this will check if token is set then don't put the host again on this page
+    useEffect();
+    function logout(){
+      localStorage.clear();
+      location.replace("http://localhost:8000/account/host-login/")
+    }
+  </script>
   <header class="text-gray-500 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
       <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
@@ -26,7 +40,7 @@
         <a class="mr-5 cursor-pointer hover:text-indigo-900">Contact</a>
         <a class="mr-5 cursor-pointer hover:text-indigo-900">About us</a>
       </nav>
-      <button
+      <button onclick="logout()"
         class="inline-flex items-center bg-indigo-100 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-200 rounded text-base mt-4 md:mt-0">
         Logout
         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

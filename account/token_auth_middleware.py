@@ -10,14 +10,26 @@ def get_user(scope):
     try:
         x=scope
         print(scope['query_string'].decode("utf8"))
-        token_key=parse_qs(scope['query_string'].decode("utf8"))
-
+        token_key=None
+        try:
+            token_key=parse_qs(scope['query_string'].decode("utf8"))["token"][0]
+            #this is for host 
+            print('student mil gya')
+        except:
+            # if token_key=={}:
+                #this is for testing as student 
+                token_key=scope['query_string'].decode("utf8")
+                print('host mil gya')
+        print(token_key)
+        # print(type(token_key))
         # this code is take token from url parameter after "?token=dasndkasncj" like this
         # token_key=parse_qs(scope['query_string'].decode("utf8"))["token"][0]
-        print("chl gya code")
         token=Token.objects.get(key=token_key)
+        print("Middleware chl gya")
+        print(token.user)
         return token.user
     except Token.DoesNotExist:
+        print("token ni mila AnonymousUser return kr diya")
         return AnonymousUser()
     
 
