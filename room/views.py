@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Group,Chat
+from .models import Room,Chat,Quiz
 import string
 import random
 
@@ -7,19 +7,20 @@ import random
 
 # ye view testing purpose ke liye h
 def quiz_page(request,group_name):
-    group, created = Group.objects.get_or_create(name=group_name)
+    room, created = Room.objects.get_or_create(name=group_name)
     if created:
         print('New Group Created')
+        quiz=Quiz.objects.create(host=request.user,room=room)
     else:
         print('Existing Group')
-    chats=Chat.objects.filter(group=group)
+    chats=Chat.objects.filter(room=room)
     return render(request,'app/quiz_page.html',{'group_name':group_name,'chats':chats})
 
 def quiz(request):
     group_name=None
     while True:
         group_name = ''.join(random.choices(string.ascii_uppercase+string.digits, k=6))
-        group = Group.objects.filter(name=group_name).exists()
+        group = Room.objects.filter(name=group_name).exists()
         if not group:
             break
     # group_name = ''.join(random.choices(string.ascii_uppercase+string.digits, k=6))

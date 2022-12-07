@@ -2,7 +2,7 @@ from channels.consumer import SyncConsumer, AsyncConsumer
 from channels.exceptions import StopConsumer
 from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer
 from time import sleep
-from .models import Group, Chat
+from .models import Room, Chat,Option,Quiz,MCQ
 import asyncio
 import json
 from asgiref.sync import async_to_sync  # used in sync version to make async to sync
@@ -62,6 +62,33 @@ class CustomSyncConsumer(WebsocketConsumer):
 '''
 
 class CustomAsyncConsumer(AsyncWebsocketConsumer):
+
+    def save_mcq_options(self,quiz_data):
+        question=quiz_data["question"]
+        options=quiz_data["answers"]
+        print('question',question)
+        mcq=MCQ(problem_statement=question)
+        print('options',options)
+        option_objects_list=[]
+        for o in options:
+            new_op=Option.objects.filter(statement=o['option'],valid=o['correct'])
+            print('op',new_op)
+            if new_op.count()==0:
+                new_op=Option(statement=o['option'],valid=o['correct'])
+                new_op.save()
+            else:
+                new_op=new_op[0]
+                
+            option_objects_list.append(new_op)
+            if o['correct']:
+                mcq.correct=new_op
+        mcq.save()
+        print('list',option_objects_list)
+        mcq.options.set(option_objects_list)
+        # mcq.save()
+        print('mcq saved and return successfully')
+        return mcq
+
     async def connect(self):
         print("web socket connected....")
         print("channel_name " + self.channel_name)
@@ -76,18 +103,14 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None):
         print("Message received from client...", text_data,type(text_data))
         data = json.loads(text_data)
-        print(type(data))
         print(data)
-
-        # print(message[0])
         try:
             quiz_data=json.loads(data["message"]) 
-            question=quiz_data["question"]
-            options=quiz_data["answers"]
-            print('question',question)
-            print('options',options)
-        except:
-            pass
+            mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data)
+        
+        except Exception as e:
+            print('error found',e)
+
         status=data["status"]
         print(status)
         try:
@@ -96,12 +119,9 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             message=""
             
         print(self.scope["user"])
-        # user=MyUser.objects.get()
         if self.scope["user"].is_authenticated:
-            group = await database_sync_to_async(Group.objects.get)(
-                name=self.group_name
-            )
-            chat = Chat(content=message, group=group)
+            room = await database_sync_to_async(Room.objects.get)(name=self.group_name)
+            chat = Chat(content=message, room=room)
             await database_sync_to_async(chat.save)()
             response = {"type": "chat.message", "message": message}
             await self.channel_layer.group_send(self.group_name, response)

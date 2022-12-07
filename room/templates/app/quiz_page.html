@@ -15,7 +15,7 @@
               <div class="mb-2">
                 <label for="question" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ask
                   Question</label>
-                <input type="text" id="question"
+                <input type="text" id="question" value="Best Party?"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
               </div>
             </caption>
@@ -46,7 +46,7 @@
                       class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                       1
                     </span>
-                    <input type="text" id="op1"
+                    <input type="text" id="op1" value="aap"
                       class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="option 1">
                   </div>
@@ -77,7 +77,7 @@
                       class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                       2
                     </span>
-                    <input type="text" id="op2"
+                    <input type="text" id="op2" value="bjp"
                       class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="option 2">
                   </div>
@@ -108,7 +108,7 @@
                       class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                       3
                     </span>
-                    <input type="text" id="op3"
+                    <input type="text" id="op3" value="cong"
                       class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="option 3">
                   </div>
@@ -139,7 +139,7 @@
                       class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                       4
                     </span>
-                    <input type="text" id="op4"
+                    <input type="text" id="op4" value="none"
                       class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="option 4">
                   </div>
@@ -209,10 +209,10 @@
     const temp = {
       question: Q,
       answers: [
-        { "op1": op1, "correct": cop1 },
-        { "op2": op2, "correct": cop2 },
-        { "op3": op3, "correct": cop3 },
-        { "op4": op4, "correct": cop4 },
+        { "option": op1, "correct": cop1 },
+        { "option": op2, "correct": cop2 },
+        { "option": op3, "correct": cop3 },
+        { "option": op4, "correct": cop4 },
       ]
     }
     console.log(temp.answers[0]["op1"])
