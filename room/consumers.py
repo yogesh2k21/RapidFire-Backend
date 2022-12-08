@@ -8,6 +8,7 @@ import json
 from asgiref.sync import async_to_sync  # used in sync version to make async to sync
 from channels.db import database_sync_to_async
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 
 '''
 class CustomSyncConsumer(WebsocketConsumer):
@@ -62,7 +63,7 @@ class CustomSyncConsumer(WebsocketConsumer):
 '''
 
 class CustomAsyncConsumer(AsyncWebsocketConsumer):
-
+    user_count=0
     def save_mcq_options(self,quiz_data):
         question=quiz_data["question"]
         options=quiz_data["answers"]
@@ -89,6 +90,17 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print('mcq saved and return successfully')
         return mcq
 
+    def online_user_count(self,group_name,action):
+        if action == 'INCR':
+            print('inc')
+            cache.incr('user_count_'+group_name)
+            pass
+        elif action == 'DECR':
+            cache.decr('user_count_'+group_name)
+            print('dec')
+        
+        return cache.get('user_count_'+group_name)
+
     async def connect(self):
         print("web socket connected....")
         print("channel_name " + self.channel_name)
@@ -98,7 +110,14 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print("group_name ", self.group_name)
         # adding this channel to this given group_name which is come within the url as parameter
         await self.channel_layer.group_add(self.group_name, self.channel_name)
+        # print('length',len(self.groups))
+        # self.user_count+=1
+        online_users=self.online_user_count(self.group_name,'INCR')
+        # sending online user count when someone join the group/room
+        response = {"type": "chat.message", "message": "Someone joined","count":online_users}
+        await self.channel_layer.group_send(self.group_name, response)
         await self.accept()
+        # await self.send(text_data=json.dumps({"message": "Someone joined","count":self.user_count}))
 
     async def receive(self, text_data=None, bytes_data=None):
         print("Message received from client...", text_data,type(text_data))
@@ -123,6 +142,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             room = await database_sync_to_async(Room.objects.get)(name=self.group_name)
             chat = Chat(content=message, room=room)
             await database_sync_to_async(chat.save)()
+            #broadcasting
             response = {"type": "chat.message", "message": message}
             await self.channel_layer.group_send(self.group_name, response)
         else:
@@ -130,13 +150,17 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
 
     async def chat_message(self, event):
         print("Event..", event)
-        await self.send(text_data=json.dumps({"message": event["message"]}))
+        await self.send(text_data=json.dumps({"message": event["message"],"count":event["count"]}))
 
     async def disconnect(self, code):
         print("web socket disconnected ", code)
         print("channel_name " + self.channel_name)
         print("channel_layer ", self.channel_layer)
+        online_users=self.online_user_count(self.group_name,'DECR')
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        # sending online user count when someone left the group/room
+        response = {"type": "chat.message", "message": "Someone Left","count":online_users}
+        await self.channel_layer.group_send(self.group_name, response)
 
 
 """
