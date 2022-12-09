@@ -12,9 +12,11 @@
 
 <body>
   <script>
+    const HOST='localhost:8000'
+
     function useEffect() { 
       if(localStorage.getItem("token")){
-        location.replace("http://localhost:8000/room/") 
+        location.replace("http://"+HOST+"/room/") 
         return
       }
     }
@@ -25,7 +27,7 @@
       const password = document.getElementById("Password").value;
       console.log(username)
       console.log(password)
-      const URL="http://localhost:8000/login/"
+      const URL="http://"+HOST+"/login/"
       // const res = await fetch(URL);
       // const data = await news.json();
       // console.log(data)
@@ -46,10 +48,10 @@
     console.log(resp);
     if(resp.token){
       localStorage.setItem("token",resp.token)
-      location.replace("http://localhost:8000/room/") 
+      location.replace("http://"+HOST+"/room/") 
     }else{
       alert("Internal Server Error!!")
-      location.replace("http://localhost:8000/account/host-login/") 
+      location.replace("http://"+HOST+"/account/host-login/") 
       return
     }
     }

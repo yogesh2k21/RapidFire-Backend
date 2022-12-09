@@ -143,7 +143,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             chat = Chat(content=message, room=room)
             await database_sync_to_async(chat.save)()
             #broadcasting
-            response = {"type": "chat.message", "message": message}
+            response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name)}
             await self.channel_layer.group_send(self.group_name, response)
         else:
             await self.send(text_data=json.dumps({"message": "Login Required"}))
