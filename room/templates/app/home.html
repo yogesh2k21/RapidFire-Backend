@@ -5,7 +5,7 @@
     <div>
       <a type="submit"
         href="{% url 'quiz' %}"
-        class="w-full px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
+        class="w-full flex justify-center px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
         >Create Room</a
       >
       <div class="form-group mb-6 mt-10">
@@ -16,13 +16,30 @@
           placeholder="Enter Room ID"
         />
       </div>
-
-      <a
-        type="submit"
+{% csrf_token %}
+      <button onclick="joinroom()"
         class="w-full px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
-        >Join Room</a
-      >
+        >Join Room</button>
     </div>
   </div>
+  <script>
+    const joinroom=async()=>{
+      const room_id=document.getElementById("roomid").value;
+      console.log(room_id)
+      const response = await fetch("http://127.0.0.1:8000/room/join_room/", {
+        method: "POST", // *POST is use bcoz here we are login the user
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"room_id":room_id}),
+      });
+      const res = await response.json();
+      if(res.exist){
+        location.replace('http://'+window.location.host+"/room/"+room_id+'/')
+      }else{
+        alert("Room not Exists!!")
+      }
+    }
+  </script>
 </div>
 {% endblock content %}

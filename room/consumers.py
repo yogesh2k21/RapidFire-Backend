@@ -64,7 +64,22 @@ class CustomSyncConsumer(WebsocketConsumer):
 
 class CustomAsyncConsumer(AsyncWebsocketConsumer):
     user_count=0
-    def save_mcq_options(self,quiz_data):
+
+    def is_quiz_ending(self,room):
+        print('inside end quiz fucntion')
+        q = Quiz.objects.filter(room=room)[0]
+        q.completed=True
+        q.save()
+        cache.delete('user_count_'+str(room.name))
+        print('room user count cleared from cache')
+        # await database_sync_to_async(q.completed=True)
+        # await database_sync_to_async(q.save)(update_fields=['completed'])
+        print('quiz ended successfully')
+        # response = {"type": "chat.message", "message": "","count":cache.get('user_count_'+self.group_name),"quizEnd":True}
+        # self.channel_layer.group_send(self.group_name, response)
+        # self.disconnect(code=1006)
+
+    def save_mcq_options(self,quiz_data,room):
         question=quiz_data["question"]
         options=quiz_data["answers"]
         print('question',question)
@@ -87,6 +102,9 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print('list',option_objects_list)
         mcq.options.set(option_objects_list)
         # mcq.save()
+        quiz=Quiz.objects.filter(room=room)[0]
+        quiz.questions.add(mcq)
+        quiz.save()
         print('mcq saved and return successfully')
         return mcq
 
@@ -94,11 +112,9 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         if action == 'INCR':
             print('inc')
             cache.incr('user_count_'+group_name)
-            pass
         elif action == 'DECR':
             cache.decr('user_count_'+group_name)
             print('dec')
-        
         return cache.get('user_count_'+group_name)
 
     async def connect(self):
@@ -110,11 +126,16 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print("group_name ", self.group_name)
         # adding this channel to this given group_name which is come within the url as parameter
         await self.channel_layer.group_add(self.group_name, self.channel_name)
-        # print('length',len(self.groups))
-        # self.user_count+=1
-        online_users=self.online_user_count(self.group_name,'INCR')
+        online_users=None
+        if int(cache.get('user_count_'+str(self.group_name)))<5:
+            online_users=self.online_user_count(str(self.group_name),'INCR')
+        elif int(cache.get('user_count_'+str(self.group_name)))==5:
+            print('5 user connected')
+            # Reject the connection
+            # await self.close()
+            raise Exception("Sorry, Group is housefull now!!!")
         # sending online user count when someone join the group/room
-        response = {"type": "chat.message", "message": "Someone joined","count":online_users}
+        response = {"type": "chat.message", "message": "Someone joined","count":online_users,"endQuiz":False}
         await self.channel_layer.group_send(self.group_name, response)
         await self.accept()
         # await self.send(text_data=json.dumps({"message": "Someone joined","count":self.user_count}))
@@ -123,12 +144,12 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print("Message received from client...", text_data,type(text_data))
         data = json.loads(text_data)
         print(data)
-        try:
-            quiz_data=json.loads(data["message"]) 
-            mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data)
-        
-        except Exception as e:
-            print('error found',e)
+        # try:
+        #     quiz_data=json.loads(data["message"]) 
+        #     mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data,self.group_name)
+
+        # except Exception as e:
+        #     print('error found',e)
 
         status=data["status"]
         print(status)
@@ -138,28 +159,46 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             message=""
             
         print(self.scope["user"])
-        if self.scope["user"].is_authenticated:
+        try:
             room = await database_sync_to_async(Room.objects.get)(name=self.group_name)
+            isQuizEnd=data["endQuiz"]
+            print(isQuizEnd)
+            if isQuizEnd:
+                await database_sync_to_async(self.is_quiz_ending)(room)
+                response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name),"endQuiz":True}
+                await self.channel_layer.group_send(self.group_name, response)
+                await self.disconnect(code=1001)
+                # self.close()
+                # response = {"type": "chat.message", "message": "","count":cache.get('user_count_'+self.group_name),"quizEnd":True}
+                # self.channel_layer.group_send(self.group_name, response)
+                # self.disconnect()
+                # self.isQuizEnding(self.group_name,room)
+            quiz_data=json.loads(data["message"]) 
+            mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data,self.group_name,room)
             chat = Chat(content=message, room=room)
             await database_sync_to_async(chat.save)()
             #broadcasting
-            response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name)}
+            response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name),"endQuiz":False}
             await self.channel_layer.group_send(self.group_name, response)
-        else:
-            await self.send(text_data=json.dumps({"message": "Login Required"}))
+        except Exception as e:
+            print('error found',e)
+        #     await self.send(text_data=json.dumps({"message": "Login Required"}))
 
     async def chat_message(self, event):
         print("Event..", event)
-        await self.send(text_data=json.dumps({"message": event["message"],"count":event["count"]}))
+        await self.send(text_data=json.dumps({"message": event["message"],"count":event["count"],"endQuiz":event["endQuiz"]}))
 
     async def disconnect(self, code):
         print("web socket disconnected ", code)
         print("channel_name " + self.channel_name)
         print("channel_layer ", self.channel_layer)
-        online_users=self.online_user_count(self.group_name,'DECR')
+        try:
+            online_users=self.online_user_count(self.group_name,'DECR')
+        except:
+            online_users=0
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
         # sending online user count when someone left the group/room
-        response = {"type": "chat.message", "message": "Someone Left","count":online_users}
+        response = {"type": "chat.message", "message": "Someone Left","count":online_users,"endQuiz":False}
         await self.channel_layer.group_send(self.group_name, response)
 
 

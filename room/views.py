@@ -1,9 +1,11 @@
 from django.shortcuts import render,redirect
-from .models import Room,Chat,Quiz
+from .models import Room,Chat,Quiz,MCQ
 import string
 import random
 from django.core.cache import cache
-
+from django.http.response import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 # ye view testing purpose ke liye h
@@ -20,7 +22,12 @@ def quiz_page(request,group_name):
         # cache.set(cache_group_name, 0,246060) # 24 hrs TTL (in seconds)
         print('user_count_'+str(cache.get('user_count_'+group_name)))
     chats=Chat.objects.filter(room=room)
-    return render(request,'app/quiz_page.html',{'group_name':group_name,'chats':chats})
+    quiz=Quiz.objects.get(room=room)
+    print(quiz.questions.all())
+    # questions=MCQ.objects.filter(room=room).values('problem_statement')
+    questions=[]
+    print(questions)
+    return render(request,'app/quiz_page.html',{'group_name':group_name,'chats':chats,'questions':quiz.questions.all()})
 
 def quiz(request):
     group_name=None
@@ -42,3 +49,16 @@ def quiz(request):
 def home(request):
     # create room and join room wala page
     return render(request,'app/home.html')
+
+@csrf_exempt
+def join_room(request):
+    json_data = json.loads(request.body.decode("utf-8"))
+    try:
+        quiz=Room.objects.filter(name=json_data["room_id"])[0]
+        print(quiz)
+        # return redirect('quiz_page', group_name=quiz.name)
+        return JsonResponse(data={"exist":True},safe=False)
+    except:
+        print('room not exists')
+        return JsonResponse(data={"exist":False},safe=False)
+        

@@ -16,7 +16,7 @@
   <script>
     function useEffect() { 
       if(!localStorage.getItem("token")){
-        location.replace("http://localhost:8000/account/host-login/") 
+        location.replace("http://127.0.0.1:8000/account/host-login/") 
         return
       }
     }
@@ -24,7 +24,7 @@
     useEffect();
     function logout(){
       localStorage.clear();
-      location.replace("http://localhost:8000/account/host-login/")
+      location.replace("http://127.0.0.1:8000/account/host-login/")
     }
   </script>
   <header class="text-gray-500 body-font">
