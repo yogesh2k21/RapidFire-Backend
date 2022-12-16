@@ -75,7 +75,7 @@
       });
       const res = await response.json();
       if (res.exist) {
-        location.replace(HOST + "/room/" + room_id + "/");
+        location.replace(HOST + "/room/quiz/" + room_id + "/");
       } else {
         alert("Room not Exists!!");
       }
