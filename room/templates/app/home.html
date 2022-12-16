@@ -3,7 +3,8 @@
 <div class="flex justify-center">
   <div class="block my-24 p-12 rounded-lg shadow-2xl bg-white max-w-sm">
     <div>
-      <a type="submit"
+      <a
+        type="submit"
         href="{% url 'quiz' %}"
         class="w-full flex justify-center px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
         >Create Room</a
@@ -16,30 +17,69 @@
           placeholder="Enter Room ID"
         />
       </div>
-{% csrf_token %}
-      <button onclick="joinroom()"
+      {% csrf_token %}
+      <button
+        onclick="joinroom()"
         class="w-full px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
-        >Join Room</button>
+      >
+        Join Room
+      </button>
     </div>
   </div>
   <script>
-    const joinroom=async()=>{
-      const room_id=document.getElementById("roomid").value;
-      console.log(room_id)
-      const response = await fetch("http://127.0.0.1:8000/room/join_room/", {
+    //const HOST = 'http://127.0.0.1:8000'
+
+    async function get_token() {
+      console.log("getting token");
+      try {
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+        if(!username || !password) return
+        const response = await fetch(HOST + "/get_token/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        }); //request end
+        const resp = await response.json();
+        console.log(resp);
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+        if (resp.token) {
+          localStorage.setItem("token", resp.token);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    get_token();
+
+    const joinroom = async () => {
+      const room_id = document.getElementById("roomid").value;
+      if(room_id.length<6){
+        alert("Room ID is Invalid!!")
+        return
+      } 
+      console.log(room_id);
+      const response = await fetch(HOST + "/room/join_room/", {
         method: "POST", // *POST is use bcoz here we are login the user
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({"room_id":room_id}),
+        body: JSON.stringify({ room_id: room_id }),
       });
       const res = await response.json();
-      if(res.exist){
-        location.replace('http://'+window.location.host+"/room/"+room_id+'/')
-      }else{
-        alert("Room not Exists!!")
+      if (res.exist) {
+        location.replace(HOST + "/room/" + room_id + "/");
+      } else {
+        alert("Room not Exists!!");
       }
-    }
+    };
   </script>
 </div>
 {% endblock content %}

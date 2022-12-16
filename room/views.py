@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Room,Chat,Quiz,MCQ
+from django.contrib.auth.models import User
 import string
 import random
 from django.core.cache import cache
@@ -47,9 +48,11 @@ def quiz(request):
     return redirect('quiz_page', group_name=group_name)
 
 def home(request):
+    print('sdfdd',request.user.is_authenticated)
     # create room and join room wala page
     return render(request,'app/home.html')
 
+#csrf is not given bcoz this is fetch api view
 @csrf_exempt
 def join_room(request):
     json_data = json.loads(request.body.decode("utf-8"))

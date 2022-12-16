@@ -407,8 +407,8 @@
       ws.send(JSON.stringify({ status: "Client Connected", message: "", count: online_user_count,endQuiz:true }));
       // ws.onclose();
       // ws.close(code=1003)
-      console.log('http://'+window.location.host)
-      location.replace('http://'+window.location.host+"/room/")
+      console.log(HOST)
+      location.replace(HOST+"/room/")
   }
 
   ws.onopen = () => {

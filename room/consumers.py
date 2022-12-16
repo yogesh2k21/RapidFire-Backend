@@ -133,6 +133,8 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             print('5 user connected')
             # Reject the connection
             # await self.close()
+            # return
+            # self.close()
             raise Exception("Sorry, Group is housefull now!!!")
         # sending online user count when someone join the group/room
         response = {"type": "chat.message", "message": "Someone joined","count":online_users,"endQuiz":False}
@@ -174,7 +176,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
                 # self.disconnect()
                 # self.isQuizEnding(self.group_name,room)
             quiz_data=json.loads(data["message"]) 
-            mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data,self.group_name,room)
+            mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data,room)
             chat = Chat(content=message, room=room)
             await database_sync_to_async(chat.save)()
             #broadcasting

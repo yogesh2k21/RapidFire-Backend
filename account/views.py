@@ -1,8 +1,10 @@
 from rest_framework.decorators import api_view
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponseRedirect
 from django.contrib.auth.models import BaseUserManager,AbstractUser,User
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.urls import reverse
+from django.contrib.auth import authenticate, login,logout
 
 # from .models import MyUser
 
@@ -35,7 +37,25 @@ from django.shortcuts import render
 #     serializer_class = MyTokenObtainPairSerializer
 
 def host_login(request):
-    return render(request,'login.html')
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        print(request.POST['username'])
+        print(request.POST['password'])
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page.
+            # redirect('home')
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            # Return an 'invalid login' error message.
+            print('user not exists')
+            #message framework add krna h
+            return render(request,'login.html')
+    else:
+        return render(request,'login.html')
 
 
 # signup ka bhi page bnega
@@ -63,3 +83,8 @@ def signup(request):
         print(e)
     print(user)
     return JsonResponse({"success":True,"message":"Account Created successfully"})
+
+def logout_view(request):
+    logout(request)
+    return redirect('host_login')
+    # return HttpResponseRedirect(reverse('host_login'))

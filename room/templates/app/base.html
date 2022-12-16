@@ -10,21 +10,63 @@
   <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
   <title>Host Login</title>
 </head>
-<style>
-</style>
+<style></style>
+
 <body class="h-screen">
   <script>
-    function useEffect() { 
-      if(!localStorage.getItem("token")){
-        location.replace("http://127.0.0.1:8000/account/host-login/") 
-        return
+
+    const HOST = 'http://127.0.0.1:8000'
+
+    // async function get_token() {
+    //   console.log('getting token')
+    //   const username = localStorage.setItem("username")
+    //   const password = localStorage.setItem("password")
+    //   const response = await fetch(HOST + "/get_token/",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         "username": username,
+    //         "password": password
+    //       }),
+    //     }
+    //   ); //request end
+    //   const resp = await response.json();
+    //   console.log(resp);
+    //   localStorage.removeItem('username')
+    //   localStorage.removeItem('password')
+    //   if (resp.token) {
+    //     localStorage.setItem("token", resp.token)
+    //   } else {
+    //     alert("Internal Server Error!!")
+    //     location.replace(HOST + "/account/host-login/")
+    //     return
+    //   }
+    // }
+
+    // get_token();
+
+    function useEffect() {
+      if (!localStorage.getItem("token")) {
+        location.replace(HOST + "/account/host-login/");
+        return;
       }
     }
+
     //this will check if token is set then don't put the host again on this page
-    useEffect();
-    function logout(){
-      localStorage.clear();
-      location.replace("http://127.0.0.1:8000/account/host-login/")
+    //useEffect();
+    // function logout() {
+    //   localStorage.clear();
+    //   location.replace(HOST + "/account/host-login/");
+    // }
+
+    year();
+    function year() {
+      var d = new Date();
+      var n = d.getFullYear();
+      document.getElementById("year").innerHTML = n;
     }
   </script>
   <header class="text-gray-500 body-font">
@@ -40,14 +82,14 @@
         <a class="mr-5 cursor-pointer hover:text-indigo-900">Contact</a>
         <a class="mr-5 cursor-pointer hover:text-indigo-900">About us</a>
       </nav>
-      <button onclick="logout()"
+      <a href={% url 'logout_view' %}
         class="inline-flex items-center bg-indigo-100 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-200 rounded text-base mt-4 md:mt-0">
         Logout
         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           class="w-4 h-4 ml-1" viewBox="0 0 24 24">
           <path d="M5 12h14M12 5l7 7-7 7"></path>
         </svg>
-      </button>
+      </a>
     </div>
   </header>
   <hr style="
@@ -93,22 +135,22 @@
           </svg>
         </a> -->
         <a class="ml-3 text-gray-500" target="_blank" href="https://www.linkedin.com/in/yogesh2k21/">
-          <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="--darkreader-inline-fill:currentColor; --darkreader-inline-stroke:currentColor;">
-            <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:none;"></path>
-            <circle cx="4" cy="4" r="2" stroke="none" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:none;"></circle>
+          <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"
+            class="w-5 h-5" viewBox="0 0 24 24" data-darkreader-inline-fill="" data-darkreader-inline-stroke="" style="
+                --darkreader-inline-fill: currentColor;
+                --darkreader-inline-stroke: currentColor;
+              ">
+            <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+              data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: none"></path>
+            <circle cx="4" cy="4" r="2" stroke="none" data-darkreader-inline-stroke=""
+              style="--darkreader-inline-stroke: none"></circle>
           </svg>
         </a>
       </span>
     </div>
   </footer>
 
-  <script>
-    year()
-    function year() {
-      var d = new Date;
-      var n = d.getFullYear();
-      document.getElementById('year').innerHTML = n;
-    }
-  </script>
+
 </body>
+
 </html>
