@@ -1,11 +1,38 @@
 {% extends 'app/base.html' %} {% block content %}
 
-<div class="flex justify-center">
+<div class="flex justify-evenly -mt-10">
   <div class="block my-24 p-12 rounded-lg shadow-2xl bg-white max-w-sm">
+    <p class="text-lg flex justify-center mb-7 font-normal text-gray-500 lg:text-xl dark:text-gray-400">Automatic Quiz</p>
     <div>
       <a
         type="submit"
-        href="{% url 'quiz' %}"
+        href="{% url 'auto_quiz' %}"
+        class="w-full flex justify-center px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
+        >Create Room</a
+      >
+      <div class="form-group mb-6 mt-10">
+        <input
+          type="text"
+          class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-indigo-500 focus:outline-none"
+          id="roomaid"
+          placeholder="Enter Room ID"
+        />
+      </div>
+      {% csrf_token %}
+      <button
+        onclick="joinaroom()"
+        class="w-full px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
+      >
+        Join Room
+      </button>
+    </div>
+  </div>
+  <div class="block my-24 p-12 rounded-lg shadow-2xl bg-white max-w-sm">
+    <p class="text-lg flex justify-center mb-7 font-normal text-gray-500 lg:text-xl dark:text-gray-400">Custom Quiz</p>
+    <div>
+      <a
+        type="submit"
+        href="{% url 'custom_quiz' %}"
         class="w-full flex justify-center px-6 py-2.5 bg-indigo-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
         >Create Room</a
       >
@@ -76,6 +103,28 @@
       const res = await response.json();
       if (res.exist) {
         location.replace(HOST + "/room/quiz/" + room_id + "/");
+      } else {
+        alert("Room not Exists!!");
+      }
+    };
+
+    const joinaroom = async () => {
+      const room_id = document.getElementById("roomaid").value;
+      if(room_id.length<6){
+        alert("Room ID is Invalid!!")
+        return
+      } 
+      console.log(room_id);
+      const response = await fetch(HOST + "/room/join_room/", {
+        method: "POST", // *POST is use bcoz here we are login the user
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ room_id: room_id }),
+      });
+      const res = await response.json();
+      if (res.exist) {
+        location.replace(HOST + "/room/aquiz/" + room_id + "/");
       } else {
         alert("Room not Exists!!");
       }

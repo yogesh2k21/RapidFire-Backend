@@ -1,0 +1,449 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<!-- <h1>Group Name: {{group_name}}</h1> -->
+<!-- <span id="online_user_count"></span> -->
+<style>
+  /* width */
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  </style>
+<section class="m-5">
+  <div class="flex flex-wrap justify-center">
+
+    <div class="px-6 h-full mx-5 text-gray-800">
+      <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
+        <div class="grow-0 shrink-1 md:shrink-0 basis-auto w-auto mb-12 md:mb-0 ">
+
+          <div class="overflow-x-auto relative shadow-2xl sm:rounded-lg">
+            <caption
+              class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+              <div class="flex my-5 justify-evenly">
+                <div class="w-2/5">
+                  <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Active user with you
+                  </label>
+                  <div class="flex">
+                    <span
+                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                      <span style="margin-left: -2px;"
+                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-green-400 opacity-75"></span>
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                      </svg> </span>
+                    <input type="text" id="online_user_count" disabled
+                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-1/2 text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="fetching...">
+                  </div>
+                </div>
+                <div class="w-2/5">
+                  <label for="website-admin"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Counter</label>
+                  <div class="flex">
+                    <span
+                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                      <span style="margin-left: -2px;" id="clockwave"
+                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-red-400 opacity-75"></span>
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </span>
+                    <input type="text" id="clocksecond" disabled
+                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="0">
+                  </div>
+                </div>
+              </div>
+            </caption>
+            <label for="question" class="block ml-7 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Question Asked</label>
+            <div class="container p-4 overflow-x-auto h-80 flex justify-center mx-auto">
+              <div class="flex flex-col w-full" id="teble">
+                
+                {% for q in questions %}
+                <div class="w-full">
+                  <caption
+                    class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                    <div class="mb-2 px-3">
+                      <div class="flex">
+                        <span
+                          class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                          {{forloop.counter}}
+                        </span>
+                        <input type="text" id="" value="{{q}}"
+                          class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="">
+                      </div>
+                    </div>
+                  </caption>
+                </div>
+                {% endfor %}
+                
+              </div>
+            </div>
+
+          </div>
+          <div class="flex justify-center mt-5">
+            <button type="submit" onclick="QuizEnd()"
+              class="flex text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">End Test
+              <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 h-full mx-5 text-gray-800" id="quizForm" style="display: none;">
+      <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
+        <div class="grow-0 shrink-1 md:shrink-0 basis-auto w-auto mb-12 md:mb-0 ">
+
+          <div class="overflow-x-auto relative shadow-2xl sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+              <caption
+                class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                <div class="mb-2">
+                  <label for="question" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ask
+                    Question</label>
+                  <input type="text" id="question" value="Best Party?"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+              </caption>
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <!-- <th scope="col" class="p-4">
+                        <div class="flex items-center">
+                        </div>
+                    </th> -->
+                  <th scope="col" class="py-3 px-6">
+                    Options
+                  </th>
+                  <th scope="col" class="py-3 px-6">
+                    Answer
+                  </th>
+                  <th scope="col" class="py-3 px-6">
+                    <!-- Clear -->
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <!-- Apple MacBook Pro 17" -->
+                    <div class="flex">
+                      <span
+                        class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                        1
+                      </span>
+                      <input type="text" id="op1" value="aap"
+                        class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="option 1">
+                    </div>
+                  </th>
+                  <td class="">
+                    <div class="flex ml-6 mt-5">
+                      <label class="inline-flex relative items-center mb-4 cursor-pointer">
+                        <input type="checkbox" value="true" id="cop1" class="sr-only peer">
+                        <div
+                          class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                        </div>
+                      </label>
+                    </div>
+                  </td>
+                  <td class="flex items-center py-4 px-6 space-x-3">
+                    <button type="button" onclick="clearinput('op1')"
+                      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <!-- Apple MacBook Pro 17" -->
+                    <div class="flex">
+                      <span
+                        class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                        2
+                      </span>
+                      <input type="text" id="op2" value="bjp"
+                        class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="option 2">
+                    </div>
+                  </th>
+                  <td class="">
+                    <div class="flex ml-6 mt-5">
+                      <label class="inline-flex relative items-center mb-4 cursor-pointer">
+                        <input type="checkbox" value="true" id="cop2" class="sr-only peer">
+                        <div
+                          class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                        </div>
+                      </label>
+                    </div>
+                  </td>
+                  <td class="flex items-center py-4 px-6 space-x-3">
+                    <button type="button" onclick="clearinput('op2')"
+                      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <!-- Apple MacBook Pro 17" -->
+                    <div class="flex">
+                      <span
+                        class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                        3
+                      </span>
+                      <input type="text" id="op3" value="cong"
+                        class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="option 3">
+                    </div>
+                  </th>
+                  <td class="">
+                    <div class="flex ml-6 mt-5">
+                      <label class="inline-flex relative items-center mb-4 cursor-pointer">
+                        <input type="checkbox" value="true" id="cop3" class="sr-only peer">
+                        <div
+                          class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                        </div>
+                      </label>
+                    </div>
+                  </td>
+                  <td class="flex items-center py-4 px-6 space-x-3">
+                    <button type="button" onclick="clearinput('op3')"
+                      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <!-- Apple MacBook Pro 17" -->
+                    <div class="flex">
+                      <span
+                        class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                        4
+                      </span>
+                      <input type="text" id="op4" value="none"
+                        class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="option 4">
+                    </div>
+                  </th>
+                  <td class="">
+                    <div class="flex ml-6 mt-5">
+                      <label class="inline-flex relative items-center mb-4 cursor-pointer">
+                        <input type="checkbox" value="true" id="cop4" class="sr-only peer">
+                        <div
+                          class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                        </div>
+                      </label>
+                    </div>
+                  </td>
+                  <td class="flex items-center py-4 px-6 space-x-3">
+                    <button type="button" onclick="clearinput('op4')"
+                      class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex justify-center mt-5">
+            <button type="submit" onclick="postQuestion()"
+              class="flex text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Post
+              <svg class="h-6 w-6 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- <textarea disabled name="" id="chat-log" cols="79" rows="20">
+        {% for c in chats %}
+            {{c.content}}
+        {% endfor %}
+    </textarea><br /> -->
+
+
+<!-- used to get group name from template context in javascript -->
+{{group_name|json_script:"group-name"}}
+<script>
+
+  let online_user_count = 0;
+  let questionNo=0;
+
+  document.getElementById("clockwave").style.display = "none";
+
+  function clearinput(id) {
+    console.log(id)
+    let v = document.getElementById('c' + id).checked;
+    console.log(v)
+    document.getElementById(id).value = "";
+  }
+
+  function postQuestion() {
+    const Q = document.getElementById('question').value;
+    const op1 = document.getElementById('op1').value;
+    const op2 = document.getElementById('op2').value;
+    const op3 = document.getElementById('op3').value;
+    const op4 = document.getElementById('op4').value;
+    const cop1 = document.getElementById('cop1').checked;
+    const cop2 = document.getElementById('cop2').checked;
+    const cop3 = document.getElementById('cop3').checked;
+    const cop4 = document.getElementById('cop4').checked;
+    const temp = {
+      question: Q,
+      answers: [
+        { "option": op1, "correct": cop1 },
+        { "option": op2, "correct": cop2 },
+        { "option": op3, "correct": cop3 },
+        { "option": op4, "correct": cop4 },
+      ]
+    }
+    console.log(temp.answers[0]["option"])
+    console.log(temp)
+    const data = JSON.stringify(temp)
+    console.log(data)
+    ws.send(JSON.stringify({ status: "Client Connected", message: data, count: online_user_count,endQuiz:false,fileTest:false }));
+    updateteble(Q);
+    clock();
+  }
+
+
+  // document.getElementById("chat-log").scrollTop = 1000;
+
+  const group_name = JSON.parse(document.getElementById("group-name").textContent);
+  console.log(group_name);
+  console.log(window.location.host)
+  const token = localStorage.getItem("token")
+  console.log(token)
+
+  const url = "ws://" + window.location.host + "/ws/awsc/room/" + group_name + "/?" + token;
+
+  var ws = new WebSocket(url);
+
+  function updateteble(Q) {
+    const newChild=`<div class="w-full">
+                  <caption
+                    class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                    <div class="mb-2 px-3">
+                      <div class="flex">
+                        <span
+                          class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                          ${++questionNo}
+                        </span>
+                        <input type="text" id="op1" value="${Q}"
+                          class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="option 1">
+                      </div>
+                    </div>
+                  </caption>
+                </div>`
+    document.getElementById("teble").insertAdjacentHTML('afterbegin', newChild);
+  }
+
+  function clock() {
+    function start(num) {
+      document.getElementById("clockwave").style.display = "block";
+      let refreshIntervalId = setInterval(updateCountdown, 1000); //update every 1 second
+      function updateCountdown() {
+        document.getElementById("clocksecond").value = num--;
+        if (num < 0) { //stop the setInterval whe time = 0 for avoid negative time
+          document.getElementById("clockwave").style.display = "none";
+          console.log("counter bnd ho gya")
+          clearInterval(refreshIntervalId);
+        }
+      }
+    }
+    start(10)
+  }
+
+  // function enterSubmit(e) {
+  //   if ((e && e.keyCode == 13) || e == 0) {
+  //     const message = document.getElementById("chat-message-input").value;
+  //     ws.send(JSON.stringify({ status: "Client Connected", message: message, count: online_user_count,endQuiz:false }));
+  //     document.getElementById("chat-message-input").value = "";
+  //     event.preventDefault();
+  //   }
+  // }
+
+  const showQuizForm = () => {
+    document.getElementById("quizForm").style.display = "block"
+  }
+
+  function QuizEnd() {
+      // const message = document.getElementById("chat-message-input").value;
+      console.log("ending quiz")
+      ws.send(JSON.stringify({ status: "Client Connected", message: "", count: online_user_count,endQuiz:true,fileTest:false }));
+      // ws.onclose();
+      // ws.close(code=1003)
+      console.log(HOST)
+      location.replace(HOST+"/room/")
+  }
+
+  ws.onopen = () => {
+    console.log("websocket connection open..");
+    // ws.onclose();
+    // document.getElementById("online_user_count").innerText=online_user_count;
+    //ws.send(JSON.stringify({ status: "Client Connected" }))
+  };
+
+  //message received from server.
+  ws.onmessage = (e) => {
+    console.log("message received from server..\n", e.data);
+    //condition for quiz end ws.onclose();
+    const data = JSON.parse(e.data);
+    online_user_count = data.count;
+    // document.querySelector("#chat-log").value += data.message + "\n";
+    // document.getElementById("chat-log").scrollTop = 1000;
+    document.getElementById("online_user_count").value = online_user_count;
+    if(online_user_count==5){
+      showQuizForm();
+    }
+  };
+
+  ws.onerror = (e) => {
+    console.log('websocket error..', e);
+  }
+
+  ws.onclose = (e) => {
+    console.log('websocket connection closed..', e);
+  }
+
+</script>
+<!-- <form id="form01" onsubmit="return false;">
+  <input type="text" name="" id="chat-message-input" size="84" /><br />
+  <input type="submit" onclick="enterSubmit(0)" style="margin-top: 4px" value="Send" id="chat-message-submit"
+    size="100" />
+</form> -->
+{% endblock content %}

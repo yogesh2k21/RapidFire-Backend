@@ -8,35 +8,118 @@
   ::-webkit-scrollbar {
     width: 2px;
   }
-  
+
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
   }
-   
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
   }
-  
+
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
   }
-  </style>
+</style>
 <section class="m-5">
-  <div class="flex flex-wrap justify-center">
+  <div class="flex justify-center">
+    auto
+    <div class="w-full px-6 h-full mx-5 text-gray-800">
+      <div class=" flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full ">
+        <div class="w-full mb-12 md:mb-0 ">
 
-    <div class="px-6 h-full mx-5 text-gray-800">
-      <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
-        <div class="grow-0 shrink-1 md:shrink-0 basis-auto w-auto mb-12 md:mb-0 ">
 
-          <div class="overflow-x-auto relative shadow-2xl sm:rounded-lg">
+          <div class=" overflow-x-auto relative shadow-2xl sm:rounded-lg">
             <caption
               class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
               <div class="flex my-5 justify-evenly">
                 <div class="w-2/5">
-                  <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Active user with you
+                  <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Active
+                    user
+                  </label>
+                  <div class="flex">
+                    <span
+                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                      <span style="margin-left: -2px;"
+                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-green-400 opacity-75"></span>
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                      </svg> </span>
+                    <input type="text" id="online_user_count" disabled
+                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-1/2 text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="fetching...">
+                  </div>
+                </div>
+                <div class="w-2/5">
+                  <label for="website-admin"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Counter</label>
+                  <div class="flex">
+                    <span
+                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                      <span style="margin-left: -2px;" id="clockwave"
+                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-red-400 opacity-75"></span>
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </span>
+                    <input type="text" id="clocksecond" disabled
+                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="0">
+                  </div>
+                </div>
+              </div>
+            </caption>
+            <div class="container p-4 overflow-x-auto h-80 flex justify-center mx-auto">
+              <div class="flex flex-col w-full" id="teble">
+
+                {% for q in questions %}
+                <div class="w-full">
+                  <caption
+                    class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                    <div class="mb-2 px-3">
+                      <div class="flex">
+                        <span
+                          class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200  border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                          {{forloop.counter}}
+                        </span>
+                        <input type="text" id="" value="{{q.question}}"
+                          class="rounded-none bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="" disabled>
+                        <input type="text" id="" value="{{q.answers}}"
+                          class="rounded-none ml-2 w-1/5  bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="" disabled>
+                        <button type="submit" onclick="postQuestion({{forloop.counter}})"
+                          class="flex postbutton text-white ml-2 bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-500">Post
+                          <svg class="h-6 w-6 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                          </svg></button>
+                      </div>
+                    </div>
+                  </caption>
+                </div>
+                {% endfor %}
+
+              </div>
+            </div>
+
+          </div>
+          <!-- <div class="  overflow-x-auto relative shadow-2xl sm:rounded-lg">
+            <caption
+              class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+              <div class="flex my-5 justify-evenly">
+                <div class="w-2/5">
+                  <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Active
+                    user with you
                   </label>
                   <div class="flex">
                     <span
@@ -79,7 +162,7 @@
               Question Asked</label>
             <div class="container p-4 overflow-x-auto h-80 flex justify-center mx-auto">
               <div class="flex flex-col w-full" id="teble">
-                
+
                 {% for q in questions %}
                 <div class="w-full">
                   <caption
@@ -90,7 +173,7 @@
                           class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                           {{forloop.counter}}
                         </span>
-                        <input type="text" id="" value="{{q}}"
+                        <input type="text" id="" value="{{q.question}}"
                           class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder="">
                       </div>
@@ -98,21 +181,27 @@
                   </caption>
                 </div>
                 {% endfor %}
-                
+
               </div>
             </div>
 
-          </div>
+          </div> -->
           <div class="flex justify-center mt-5">
             <button type="submit" onclick="QuizEnd()"
-              class="flex text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">End Test
-              <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg></button>
+              class="flex text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">End
+              Test
+              <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636">
+                </path>
+              </svg></button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="px-6 h-full mx-5 text-gray-800" id="quizForm" style="display: none;">
+    <!-- <div class="px-6 h-full mx-5 text-gray-800" id="quizForm" style="display: none;">
       <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
         <div class="grow-0 shrink-1 md:shrink-0 basis-auto w-auto mb-12 md:mb-0 ">
 
@@ -129,10 +218,6 @@
               </caption>
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <!-- <th scope="col" class="p-4">
-                        <div class="flex items-center">
-                        </div>
-                    </th> -->
                   <th scope="col" class="py-3 px-6">
                     Options
                   </th>
@@ -140,7 +225,6 @@
                     Answer
                   </th>
                   <th scope="col" class="py-3 px-6">
-                    <!-- Clear -->
                   </th>
                 </tr>
               </thead>
@@ -148,7 +232,7 @@
                 <tr
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <!-- Apple MacBook Pro 17" -->
+                    
                     <div class="flex">
                       <span
                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -179,7 +263,7 @@
                 <tr
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <!-- Apple MacBook Pro 17" -->
+                   
                     <div class="flex">
                       <span
                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -210,7 +294,7 @@
                 <tr
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <!-- Apple MacBook Pro 17" -->
+                    
                     <div class="flex">
                       <span
                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -241,7 +325,7 @@
                 <tr
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <!-- Apple MacBook Pro 17" -->
+                  
                     <div class="flex">
                       <span
                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -281,7 +365,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </section>
@@ -300,7 +384,7 @@
 <script>
 
   let online_user_count = 0;
-  let questionNo=0;
+  let questionNo = 0;
 
   document.getElementById("clockwave").style.display = "none";
 
@@ -311,31 +395,32 @@
     document.getElementById(id).value = "";
   }
 
-  function postQuestion() {
-    const Q = document.getElementById('question').value;
-    const op1 = document.getElementById('op1').value;
-    const op2 = document.getElementById('op2').value;
-    const op3 = document.getElementById('op3').value;
-    const op4 = document.getElementById('op4').value;
-    const cop1 = document.getElementById('cop1').checked;
-    const cop2 = document.getElementById('cop2').checked;
-    const cop3 = document.getElementById('cop3').checked;
-    const cop4 = document.getElementById('cop4').checked;
-    const temp = {
-      question: Q,
-      answers: [
-        { "option": op1, "correct": cop1 },
-        { "option": op2, "correct": cop2 },
-        { "option": op3, "correct": cop3 },
-        { "option": op4, "correct": cop4 },
-      ]
-    }
-    console.log(temp.answers[0]["option"])
-    console.log(temp)
-    const data = JSON.stringify(temp)
+  function postQuestion(num) {
+    console.log(num)
+    // const Q = document.getElementById('question').value;
+    // const op1 = document.getElementById('op1').value;
+    // const op2 = document.getElementById('op2').value;
+    // const op3 = document.getElementById('op3').value;
+    // const op4 = document.getElementById('op4').value;
+    // const cop1 = document.getElementById('cop1').checked;
+    // const cop2 = document.getElementById('cop2').checked;
+    // const cop3 = document.getElementById('cop3').checked;
+    // const cop4 = document.getElementById('cop4').checked;
+    // const temp = {
+    //   question: Q,
+    //   answers: [
+    //     { "option": op1, "correct": cop1 },
+    //     { "option": op2, "correct": cop2 },
+    //     { "option": op3, "correct": cop3 },
+    //     { "option": op4, "correct": cop4 },
+    //   ]
+    // }
+    // console.log(temp.answers[0]["option"])
+    // console.log(temp)
+    const data = num;
     console.log(data)
-    ws.send(JSON.stringify({ status: "Client Connected", message: data, count: online_user_count,endQuiz:false }));
-    updateteble(Q);
+    ws.send(JSON.stringify({ status: "Client Connected", message: data, count: online_user_count, endQuiz: false, fileTest: false }));
+    //updateteble(Q);
     clock();
   }
 
@@ -348,12 +433,12 @@
   const token = localStorage.getItem("token")
   console.log(token)
 
-  const url = "ws://" + window.location.host + "/ws/awsc/room/quiz/" + group_name + "/?" + token;
+  const url = "ws://" + window.location.host + "/ws/awsc/room/autoquiz/" + group_name + "/?" + token;
 
   var ws = new WebSocket(url);
 
   function updateteble(Q) {
-    const newChild=`<div class="w-full">
+    const newChild = `<div class="w-full">
                   <caption
                     class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                     <div class="mb-2 px-3">
@@ -381,34 +466,39 @@
         if (num < 0) { //stop the setInterval whe time = 0 for avoid negative time
           document.getElementById("clockwave").style.display = "none";
           console.log("counter bnd ho gya")
+          document.getElementsByClassName("postbutton").disabled = false;
           clearInterval(refreshIntervalId);
         }
       }
     }
+    // document.getElementsByClassName
+    //const div =  document.querySelector('postbutton');
+    //div.classList.remove('info');
+    document.getElementsByClassName("postbutton").disabled = true;
     start(10)
   }
 
-  function enterSubmit(e) {
-    if ((e && e.keyCode == 13) || e == 0) {
-      const message = document.getElementById("chat-message-input").value;
-      ws.send(JSON.stringify({ status: "Client Connected", message: message, count: online_user_count,endQuiz:false }));
-      document.getElementById("chat-message-input").value = "";
-      event.preventDefault();
-    }
-  }
+  // function enterSubmit(e) {
+  //   if ((e && e.keyCode == 13) || e == 0) {
+  //     const message = document.getElementById("chat-message-input").value;
+  //     ws.send(JSON.stringify({ status: "Client Connected", message: message, count: online_user_count,endQuiz:false }));
+  //     document.getElementById("chat-message-input").value = "";
+  //     event.preventDefault();
+  //   }
+  // }
 
   const showQuizForm = () => {
     document.getElementById("quizForm").style.display = "block"
   }
 
   function QuizEnd() {
-      // const message = document.getElementById("chat-message-input").value;
-      console.log("ending quiz")
-      ws.send(JSON.stringify({ status: "Client Connected", message: "", count: online_user_count,endQuiz:true }));
-      // ws.onclose();
-      // ws.close(code=1003)
-      console.log(HOST)
-      location.replace(HOST+"/room/")
+    // const message = document.getElementById("chat-message-input").value;
+    console.log("ending quiz")
+    ws.send(JSON.stringify({ status: "Client Connected", message: "", count: online_user_count, endQuiz: true, fileTest: false }));
+    // ws.onclose();
+    // ws.close(code=1003)
+    console.log(HOST)
+    location.replace(HOST + "/room/")
   }
 
   ws.onopen = () => {
@@ -427,7 +517,7 @@
     // document.querySelector("#chat-log").value += data.message + "\n";
     // document.getElementById("chat-log").scrollTop = 1000;
     document.getElementById("online_user_count").value = online_user_count;
-    if(online_user_count==5){
+    if (online_user_count == 5) {
       showQuizForm();
     }
   };
