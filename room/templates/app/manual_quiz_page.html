@@ -271,7 +271,7 @@
             </table>
           </div>
           <div class="flex justify-center mt-5">
-            <button type="submit" onclick="postQuestion()"
+            <button id='postbutton' type="submit" onclick="postQuestion()"
               class="flex text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Post
               <svg class="h-6 w-6 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -321,6 +321,10 @@
     const cop2 = document.getElementById('cop2').checked;
     const cop3 = document.getElementById('cop3').checked;
     const cop4 = document.getElementById('cop4').checked;
+    if(!cop1 && !cop2 && !cop3 && !cop4){
+      alert('choose corrent option as well!!')
+      return
+    }
     const temp = {
       question: Q,
       answers: [
@@ -381,10 +385,15 @@
         if (num < 0) { //stop the setInterval whe time = 0 for avoid negative time
           document.getElementById("clockwave").style.display = "none";
           console.log("counter bnd ho gya")
+          document.getElementById("postbutton").disabled = false;
+          document.getElementById("postbutton").style.backgroundColor = "#2563EB";
           clearInterval(refreshIntervalId);
         }
       }
     }
+    //postQuestion
+    document.getElementById("postbutton").disabled = true;
+    document.getElementById("postbutton").style.backgroundColor = "grey";
     start(10)
   }
 

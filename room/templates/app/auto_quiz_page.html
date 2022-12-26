@@ -1,5 +1,4 @@
-{% extends 'app/base.html' %}
-{% block content %}
+{% extends 'app/base.html' %} {% block content %}
 
 <!-- <h1>Group Name: {{group_name}}</h1> -->
 <!-- <span id="online_user_count"></span> -->
@@ -27,91 +26,153 @@
 <section class="m-5">
   <div class="flex justify-center">
     auto
-    <div class="w-full px-6 h-full mx-5 text-gray-800">
-      <div class=" flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full ">
-        <div class="w-full mb-12 md:mb-0 ">
-
-
-          <div class=" overflow-x-auto relative shadow-2xl sm:rounded-lg">
+    <div class="w-full px-6 mx-5 text-gray-800">
+      <div
+        class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap"
+      >
+        <div class="w-full mb-12 md:mb-0">
+          <div class="overflow-x-auto relative shadow-2xl sm:rounded-lg">
             <caption
-              class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+              class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800"
+            >
               <div class="flex my-5 justify-evenly">
                 <div class="w-2/5">
-                  <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Active
-                    user
+                  <label
+                    for="website-admin"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Active user
                   </label>
                   <div class="flex">
                     <span
-                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                      <span style="margin-left: -2px;"
-                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-green-400 opacity-75"></span>
-                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                        </path>
-                      </svg> </span>
-                    <input type="text" id="online_user_count" disabled
-                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-1/2 text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="fetching...">
+                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
+                    >
+                      <span
+                        style="margin-left: -2px"
+                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-green-400 opacity-75"
+                      ></span>
+                      <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                        ></path>
+                      </svg>
+                    </span>
+                    <input
+                      type="text"
+                      id="online_user_count"
+                      disabled
+                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-1/2 text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="fetching..."
+                    />
                   </div>
                 </div>
                 <div class="w-2/5">
-                  <label for="website-admin"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Counter</label>
+                  <label
+                    for="website-admin"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Counter</label
+                  >
                   <div class="flex">
                     <span
-                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                      <span style="margin-left: -2px;" id="clockwave"
-                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-red-400 opacity-75"></span>
-                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
+                    >
+                      <span
+                        style="margin-left: -2px"
+                        id="clockwave"
+                        class="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-red-400 opacity-75"
+                      ></span>
+                      <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
                       </svg>
                     </span>
-                    <input type="text" id="clocksecond" disabled
-                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="0">
+                    <input
+                      type="text"
+                      id="clocksecond"
+                      disabled
+                      class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="0"
+                    />
                   </div>
                 </div>
               </div>
             </caption>
-            <div class="container p-4 overflow-x-auto h-80 flex justify-center mx-auto">
+            <div
+              class="container p-4 overflow-x-auto h-80 flex justify-center mx-auto"
+            >
               <div class="flex flex-col w-full" id="teble">
-
                 {% for q in questions %}
                 <div class="w-full">
                   <caption
-                    class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                    class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800"
+                  >
                     <div class="mb-2 px-3">
                       <div class="flex">
                         <span
-                          class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200  border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                          class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
+                        >
                           {{forloop.counter}}
                         </span>
-                        <input type="text" id="" value="{{q.question}}"
-                          class="rounded-none bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="" disabled>
-                        <input type="text" id="" value="{{q.answers}}"
-                          class="rounded-none ml-2 w-1/5  bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="" disabled>
-                        <button type="submit" onclick="postQuestion({{forloop.counter}})"
-                          class="flex postbutton text-white ml-2 bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-500">Post
-                          <svg class="h-6 w-6 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <input
+                          type="text"
+                          id=""
+                          value="{{q.question}}"
+                          class="rounded-none bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder=""
+                          disabled
+                        />
+                        <input
+                          type="text"
+                          id=""
+                          value="{{q.answers}}"
+                          class="rounded-none ml-2 w-1/5 bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block text-sm p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder=""
+                          disabled
+                        />
+                        <button
+                          type="submit"
+                          onclick="postQuestion({{forloop.counter}})"
+                          class="flex postbutton text-white ml-2 bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-3 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-500"
+                        >
+                          Post
+                          <svg
+                            class="h-4 w-4 ml-2 mt-1"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
                             <line x1="22" y1="2" x2="11" y2="13" />
                             <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                          </svg></button>
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </caption>
                 </div>
                 {% endfor %}
-
               </div>
             </div>
-
           </div>
           <!-- <div class="  overflow-x-auto relative shadow-2xl sm:rounded-lg">
             <caption
@@ -187,15 +248,27 @@
 
           </div> -->
           <div class="flex justify-center mt-5">
-            <button type="submit" onclick="QuizEnd()"
-              class="flex text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">End
-              Test
-              <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636">
-                </path>
-              </svg></button>
+            <button
+              type="submit"
+              onclick="QuizEnd()"
+              class="flex text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            >
+              End Test
+              <svg
+                class="w-6 h-6 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                ></path>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -366,11 +439,8 @@
         </div>
       </div>
     </div> -->
-
   </div>
 </section>
-
-
 
 <!-- <textarea disabled name="" id="chat-log" cols="79" rows="20">
         {% for c in chats %}
@@ -378,25 +448,23 @@
         {% endfor %}
     </textarea><br /> -->
 
-
 <!-- used to get group name from template context in javascript -->
 {{group_name|json_script:"group-name"}}
 <script>
-
   let online_user_count = 0;
   let questionNo = 0;
 
   document.getElementById("clockwave").style.display = "none";
 
   function clearinput(id) {
-    console.log(id)
-    let v = document.getElementById('c' + id).checked;
-    console.log(v)
+    console.log(id);
+    let v = document.getElementById("c" + id).checked;
+    console.log(v);
     document.getElementById(id).value = "";
   }
 
   function postQuestion(num) {
-    console.log(num)
+    console.log(num);
     // const Q = document.getElementById('question').value;
     // const op1 = document.getElementById('op1').value;
     // const op2 = document.getElementById('op2').value;
@@ -418,22 +486,37 @@
     // console.log(temp.answers[0]["option"])
     // console.log(temp)
     const data = num;
-    console.log(data)
-    ws.send(JSON.stringify({ status: "Client Connected", message: data, count: online_user_count, endQuiz: false, fileTest: false }));
+    console.log(data);
+    ws.send(
+      JSON.stringify({
+        status: "Client Connected",
+        message: data,
+        count: online_user_count,
+        endQuiz: false,
+        fileTest: false,
+      })
+    );
     //updateteble(Q);
     clock();
   }
 
-
   // document.getElementById("chat-log").scrollTop = 1000;
 
-  const group_name = JSON.parse(document.getElementById("group-name").textContent);
+  const group_name = JSON.parse(
+    document.getElementById("group-name").textContent
+  );
   console.log(group_name);
-  console.log(window.location.host)
-  const token = localStorage.getItem("token")
-  console.log(token)
+  console.log(window.location.host);
+  const token = localStorage.getItem("token");
+  console.log(token);
 
-  const url = "ws://" + window.location.host + "/ws/awsc/room/autoquiz/" + group_name + "/?" + token;
+  const url =
+    "ws://" +
+    window.location.host +
+    "/ws/awsc/room/autoquiz/" +
+    group_name +
+    "/?" +
+    token;
 
   var ws = new WebSocket(url);
 
@@ -453,8 +536,8 @@
                       </div>
                     </div>
                   </caption>
-                </div>`
-    document.getElementById("teble").insertAdjacentHTML('afterbegin', newChild);
+                </div>`;
+    document.getElementById("teble").insertAdjacentHTML("afterbegin", newChild);
   }
 
   function clock() {
@@ -463,10 +546,15 @@
       let refreshIntervalId = setInterval(updateCountdown, 1000); //update every 1 second
       function updateCountdown() {
         document.getElementById("clocksecond").value = num--;
-        if (num < 0) { //stop the setInterval whe time = 0 for avoid negative time
+        if (num < 0) {
+          //stop the setInterval whe time = 0 for avoid negative time
           document.getElementById("clockwave").style.display = "none";
-          console.log("counter bnd ho gya")
-          document.getElementsByClassName("postbutton").disabled = false;
+          console.log("counter bnd ho gya");
+          var elems = document.getElementsByClassName("postbutton");
+          for (var i = 0; i < elems.length; i++) {
+            elems[i].disabled = false;
+            elems[i].style.backgroundColor = "#2563EB";
+          }
           clearInterval(refreshIntervalId);
         }
       }
@@ -474,8 +562,13 @@
     // document.getElementsByClassName
     //const div =  document.querySelector('postbutton');
     //div.classList.remove('info');
-    document.getElementsByClassName("postbutton").disabled = true;
-    start(10)
+    //document.getElementsByClassName("postbutton").disabled = true;
+    var elems = document.getElementsByClassName("postbutton");
+    for (var i = 0; i < elems.length; i++) {
+      elems[i].disabled = true;
+      elems[i].style.backgroundColor = "grey";
+    }
+    start(10);
   }
 
   // function enterSubmit(e) {
@@ -488,17 +581,25 @@
   // }
 
   const showQuizForm = () => {
-    document.getElementById("quizForm").style.display = "block"
-  }
+    document.getElementById("quizForm").style.display = "block";
+  };
 
   function QuizEnd() {
     // const message = document.getElementById("chat-message-input").value;
-    console.log("ending quiz")
-    ws.send(JSON.stringify({ status: "Client Connected", message: "", count: online_user_count, endQuiz: true, fileTest: false }));
+    console.log("ending quiz");
+    ws.send(
+      JSON.stringify({
+        status: "Client Connected",
+        message: "",
+        count: online_user_count,
+        endQuiz: true,
+        fileTest: false,
+      })
+    );
     // ws.onclose();
     // ws.close(code=1003)
-    console.log(HOST)
-    location.replace(HOST + "/room/")
+    console.log(HOST);
+    location.replace(HOST + "/room/");
   }
 
   ws.onopen = () => {
@@ -523,13 +624,12 @@
   };
 
   ws.onerror = (e) => {
-    console.log('websocket error..', e);
-  }
+    console.log("websocket error..", e);
+  };
 
   ws.onclose = (e) => {
-    console.log('websocket connection closed..', e);
-  }
-
+    console.log("websocket connection closed..", e);
+  };
 </script>
 <!-- <form id="form01" onsubmit="return false;">
   <input type="text" name="" id="chat-message-input" size="84" /><br />
