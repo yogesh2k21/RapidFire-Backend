@@ -59,7 +59,7 @@ def host_login(request):
 
 
 # signup ka bhi page bnega
-@api_view(['POST'])
+# @api_view(['POST'])
 def signup(request):
     # print(request.body)
     received_json_data = json.loads(request.body.decode("utf-8"))

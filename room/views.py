@@ -125,7 +125,7 @@ def get_excel_data(self):
                 # else:
                 #     t={"option":s.cell(row=r,column=c).value,"correct":False}
                 # options.append(t)
-                ans=s.cell(row=r,column=4).value
+                ans=s.cell(row=r,column=5).value
             Question.append({"question":mcq,"answers":ans})       
 
 

@@ -10,6 +10,7 @@ from channels.db import database_sync_to_async
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from pathlib import Path
+import random
 from openpyxl import load_workbook
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -87,14 +88,15 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
         # column=s.max_column
         answers=[]
         question=s.cell(row=mcq_id,column=1).value
-        for c in range(1,5):
-            if c == 4:
+        for c in range(2,6):
+            if c == 5:
                 t={"option":s.cell(row=mcq_id,column=c).value,"correct":True}       
             else:
                 t={"option":s.cell(row=mcq_id,column=c).value,"correct":False}
             answers.append(t)
             # ans=s.cell(row=mcq_id,column=4).value
-        print('getting datatatatatata')
+        random.shuffle(answers)
+        print('getting datatatatatata',answers)
         data=dict({"question":question,"answers":answers})    
         print(data)
         return data
