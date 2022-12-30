@@ -93,7 +93,7 @@
         return
       } 
       console.log(room_id);
-      const response = await fetch(HOST + "/room/join_room/", {
+      const response = await fetch(HOST + "/join_room/", {
         method: "POST", // *POST is use bcoz here we are login the user
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@
       });
       const res = await response.json();
       if (res.exist) {
-        location.replace(HOST + "/room/quiz/" + room_id + "/");
+        location.replace(HOST + "/quiz/" + room_id + "/");
       } else {
         alert("Room not Exists!!");
       }
@@ -115,7 +115,7 @@
         return
       } 
       console.log(room_id);
-      const response = await fetch(HOST + "/room/join_room/", {
+      const response = await fetch(HOST + "/join_room/", {
         method: "POST", // *POST is use bcoz here we are login the user
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@
       });
       const res = await response.json();
       if (res.exist) {
-        location.replace(HOST + "/room/aquiz/" + room_id + "/");
+        location.replace(HOST + "/aquiz/" + room_id + "/");
       } else {
         alert("Room not Exists!!");
       }

@@ -8,7 +8,8 @@ from account.views import signup
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("account/", include("account.urls")),  # new
-    path("room/",include("room.urls")),
+    path("",include("room.urls")),
+    path("quizes/",include("quizes.urls")),
     path('get_token/', obtain_auth_token, name='get_token'),
     # path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('signup/',signup,name='signup'),
