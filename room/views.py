@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Room,Chat,Quiz,MCQ
+from .models import Room,Chat,Quiz,MCQ,Score
 from django.contrib.auth.models import User
 import string
 import random
@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 from .participant_middleware import get_user_middleware
 from rest_framework.authtoken.models import Token
 from pathlib import Path
+from time import sleep
 
         # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -161,23 +162,23 @@ def join_room(request):
         print('room not exists')
         return JsonResponse(data={"exist":False},safe=False)
         
-def fetch_user(request):
-    json_data = json.loads(request.body.decode("utf-8"))
-    # print(json_data,'json_data')
+# def fetch_user(request):
+#     json_data = json.loads(request.body.decode("utf-8"))
+#     # print(json_data,'json_data')
 
-    key = request.headers['Authorization'].split(' ')[1]
-    # print(key)
-    response=None
-    token=Token.objects.get(key=key)
-    # print(token.user,'username')
+#     key = request.headers['Authorization'].split(' ')[1]
+#     # print(key)
+#     response=None
+#     token=Token.objects.get(key=key)
+#     # print(token.user,'username')
 
-    user=token.user
-    group_name=json_data['group_name']
-    # print(group_name,user)
-    context={}
-    context['user']=user
-    context['body']=json_data
-    return context
+#     user=token.user
+#     group_name=json_data['group_name']
+#     # print(group_name,user)
+#     context={}
+#     context['user']=user
+#     context['body']=json_data
+#     return context
 
 # @method_decorator(get_user_middleware)
 @get_user_middleware
@@ -187,15 +188,25 @@ def submit_quiz_answers(request):
     if request.method == 'POST':
         try:
             print(request.user.first_name)
-            print(request.body)
-            # json_data = json.loads(request.body.decode("utf-8"))
+            print(json.loads(request.body.decode("utf-8")))
+            json_data = json.loads(request.body.decode("utf-8"))
+            roomid=json_data['roomid']
+            points=json_data['points']
+            room=Room.objects.filter(name=roomid)[0]
+            print(room)
+            Score.objects.create(room=room,user=request.user,point=points)
             # print('vews k ',request['user'])
-            # u=request['user']
-            # print(request.POST['group_name'])
-            # print(request['group_name'],'<- group name')
-            # json_data = request.headers['Authorization'].split(' ')[1]
-            # print(json_data)
-            return JsonResponse(data={'status':True,'message':'Successfully Submit'})
+            sleep(2)
+            score_obj=Score.objects.filter(room=room).values('user__first_name','user__last_name','point').order_by('-point')
+            print(score_obj)
+            result=[]
+            for obj in score_obj:
+                t={
+                    'user_name':str(obj['user__first_name']+' '+obj['user__last_name']),
+                    'point':obj['point']
+                }
+                result.append(t)
+            return JsonResponse(data={'status':True,'message':'Successfully Submit','data':result})
         except Exception as e:
             print(e)
             return JsonResponse(data={'status':False,'message':'Failed to submit'})
