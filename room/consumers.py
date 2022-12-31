@@ -66,6 +66,26 @@ class CustomSyncConsumer(WebsocketConsumer):
         )
 '''
 
+def online_user_count(group_name,action):
+    if action == 'INCR':
+        print('inc')
+        cache.incr('user_count_'+group_name)
+    elif action == 'DECR':
+        cache.decr('user_count_'+group_name)
+        print('dec')
+    return cache.get('user_count_'+group_name)
+
+def is_quiz_ending(room):
+        print('inside end quiz fucntion')
+        q = Quiz.objects.filter(room=room)[0]
+        q.completed=True
+        q.save()
+        cache.delete('user_count_'+str(room.name))
+        print('room user count cleared from cache')
+        # await database_sync_to_async(q.completed=True)
+        # await database_sync_to_async(q.save)(update_fields=['completed'])
+        print('quiz ended successfully')
+
 class AutoAsyncConsumer(AsyncWebsocketConsumer):
     user_count=0
 
@@ -81,40 +101,7 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
         }
         '''
 
-    def get_mcq(self,mcq_id):
-        myfile=load_workbook(BASE_DIR/"static/quiz.xlsx")
-        s=myfile['Sheet1']
-        # row=s.max_row
-        # column=s.max_column
-        answers=[]
-        question=s.cell(row=mcq_id,column=1).value
-        for c in range(2,6):
-            if c == 5:
-                t={"option":s.cell(row=mcq_id,column=c).value,"correct":True}       
-            else:
-                t={"option":s.cell(row=mcq_id,column=c).value,"correct":False}
-            answers.append(t)
-            # ans=s.cell(row=mcq_id,column=4).value
-        random.shuffle(answers)
-        print('getting datatatatatata',answers)
-        data=dict({"question":question,"answers":answers})    
-        print(data)
-        return data
-
-    def is_quiz_ending(self,room):
-        print('inside end quiz fucntion')
-        q = Quiz.objects.filter(room=room)[0]
-        q.completed=True
-        q.save()
-        cache.delete('user_count_'+str(room.name))
-        print('room user count cleared from cache')
-        # await database_sync_to_async(q.completed=True)
-        # await database_sync_to_async(q.save)(update_fields=['completed'])
-        print('quiz ended successfully')
-        # response = {"type": "chat.message", "message": "","count":cache.get('user_count_'+self.group_name),"quizEnd":True}
-        # self.channel_layer.group_send(self.group_name, response)
-        # self.disconnect(code=1006)
-
+    '''
     def save_mcq_options(self,quiz_data,room):
         question=quiz_data["question"]
         options=quiz_data["answers"]
@@ -143,15 +130,94 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
         quiz.save()
         print('mcq saved and return successfully')
         return mcq
+    '''
 
-    def online_user_count(self,group_name,action):
-        if action == 'INCR':
-            print('inc')
-            cache.incr('user_count_'+group_name)
-        elif action == 'DECR':
-            cache.decr('user_count_'+group_name)
-            print('dec')
-        return cache.get('user_count_'+group_name)
+    def get_mcq(self,mcq_id,room):
+        myfile=load_workbook(BASE_DIR/"static/quiz.xlsx")
+        s=myfile['Sheet1']
+        # row=s.max_row
+        # column=s.max_column
+
+        question=s.cell(row=mcq_id,column=1).value
+        print('1')
+        mcq=MCQ(problem_statement=question)
+        print('2')
+        new_op=Option.objects.create(statement=s.cell(row=mcq_id,column=5).value,valid=True)
+        print('3')
+        new_op.save()
+        # mcq.options.set(new_op)
+        print('4')
+        mcq.correct=new_op
+        mcq.save()
+        quiz=Quiz.objects.filter(room=room)[0]
+        quiz.questions.add(mcq)
+        quiz.save()
+        print('mcq saved and return successfully')
+        answers=[]
+        for c in range(2,6):
+            if c == 5:
+                t={"option":s.cell(row=mcq_id,column=c).value,"correct":True}       
+            else:
+                t={"option":s.cell(row=mcq_id,column=c).value,"correct":False}
+            answers.append(t)
+            # ans=s.cell(row=mcq_id,column=4).value
+        random.shuffle(answers)
+        print('getting datatatatatata',answers)
+        data=dict({"question":question,"answers":answers})    
+        print(data)
+        return data
+
+    # def is_quiz_ending(self,room):
+    #     print('inside end quiz fucntion')
+    #     q = Quiz.objects.filter(room=room)[0]
+    #     q.completed=True
+    #     q.save()
+    #     cache.delete('user_count_'+str(room.name))
+    #     print('room user count cleared from cache')
+    #     # await database_sync_to_async(q.completed=True)
+    #     # await database_sync_to_async(q.save)(update_fields=['completed'])
+    #     print('quiz ended successfully')
+    #     # response = {"type": "chat.message", "message": "","count":cache.get('user_count_'+self.group_name),"quizEnd":True}
+    #     # self.channel_layer.group_send(self.group_name, response)
+    #     # self.disconnect(code=1006)
+
+    # def save_mcq_options(self,quiz_data,room):
+    #     question=quiz_data["question"]
+    #     options=quiz_data["answers"]
+    #     print('question',question)
+    #     mcq=MCQ(problem_statement=question)
+    #     print('options',options)
+    #     option_objects_list=[]
+    #     for o in options:
+    #         new_op=Option.objects.filter(statement=o['option'],valid=o['correct'])
+    #         print('op',new_op)
+    #         if new_op.count()==0:
+    #             new_op=Option(statement=o['option'],valid=o['correct'])
+    #             new_op.save()
+    #         else:
+    #             new_op=new_op[0]
+                
+    #         option_objects_list.append(new_op)
+    #         if o['correct']:
+    #             mcq.correct=new_op
+    #     mcq.save()
+    #     print('list',option_objects_list)
+    #     mcq.options.set(option_objects_list)
+    #     # mcq.save()
+    #     quiz=Quiz.objects.filter(room=room)[0]
+    #     quiz.questions.add(mcq)
+    #     quiz.save()
+    #     print('mcq saved and return successfully')
+    #     return mcq
+
+    # def online_user_count(self,group_name,action):
+    #     if action == 'INCR':
+    #         print('inc')
+    #         cache.incr('user_count_'+group_name)
+    #     elif action == 'DECR':
+    #         cache.decr('user_count_'+group_name)
+    #         print('dec')
+    #     return cache.get('user_count_'+group_name)
 
     async def connect(self):
         print("web socket connected....")
@@ -164,7 +230,7 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         online_users=None
         if int(cache.get('user_count_'+str(self.group_name)))<5:
-            online_users=self.online_user_count(str(self.group_name),'INCR')
+            online_users=online_user_count(str(self.group_name),'INCR')
         elif int(cache.get('user_count_'+str(self.group_name)))==5:
             print('5 user connected')
             # Reject the connection
@@ -202,14 +268,14 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
             isQuizEnd=data["endQuiz"]
             print(isQuizEnd)
             if isQuizEnd:
-                await database_sync_to_async(self.is_quiz_ending)(room)
+                await database_sync_to_async(is_quiz_ending)(room)
                 response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name),"endQuiz":True}
                 await self.channel_layer.group_send(self.group_name, response)
                 await self.disconnect(code=1001)
 
             # quiz_data=json.loads(data["message"]) 
             mcq_no=data["message"]
-            message=self.get_mcq(mcq_no+1)
+            message=await database_sync_to_async(self.get_mcq)(mcq_no+1,room)
             # mcq=await database_sync_to_async(self.save_mcq_options)(quiz_data,room)
             # chat = Chat(content=message, room=room)
             # await database_sync_to_async(chat.save)()
@@ -229,7 +295,7 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
         print("channel_name " + self.channel_name)
         print("channel_layer ", self.channel_layer)
         try:
-            online_users=self.online_user_count(self.group_name,'DECR')
+            online_users=online_user_count(self.group_name,'DECR')
         except:
             online_users=0
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
@@ -240,19 +306,19 @@ class AutoAsyncConsumer(AsyncWebsocketConsumer):
 class CustomAsyncConsumer(AsyncWebsocketConsumer):
     user_count=0
 
-    def is_quiz_ending(self,room):
-        print('inside end quiz fucntion')
-        q = Quiz.objects.filter(room=room)[0]
-        q.completed=True
-        q.save()
-        cache.delete('user_count_'+str(room.name))
-        print('room user count cleared from cache')
-        # await database_sync_to_async(q.completed=True)
-        # await database_sync_to_async(q.save)(update_fields=['completed'])
-        print('quiz ended successfully')
-        # response = {"type": "chat.message", "message": "","count":cache.get('user_count_'+self.group_name),"quizEnd":True}
-        # self.channel_layer.group_send(self.group_name, response)
-        # self.disconnect(code=1006)
+    # def is_quiz_ending(self,room):
+    #     print('inside end quiz fucntion')
+    #     q = Quiz.objects.filter(room=room)[0]
+    #     q.completed=True
+    #     q.save()
+    #     cache.delete('user_count_'+str(room.name))
+    #     print('room user count cleared from cache')
+    #     # await database_sync_to_async(q.completed=True)
+    #     # await database_sync_to_async(q.save)(update_fields=['completed'])
+    #     print('quiz ended successfully')
+    #     # response = {"type": "chat.message", "message": "","count":cache.get('user_count_'+self.group_name),"quizEnd":True}
+    #     # self.channel_layer.group_send(self.group_name, response)
+    #     # self.disconnect(code=1006)
 
     def save_mcq_options(self,quiz_data,room):
         question=quiz_data["question"]
@@ -283,14 +349,14 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print('mcq saved and return successfully')
         return mcq
 
-    def online_user_count(self,group_name,action):
-        if action == 'INCR':
-            print('inc')
-            cache.incr('user_count_'+group_name)
-        elif action == 'DECR':
-            cache.decr('user_count_'+group_name)
-            print('dec')
-        return cache.get('user_count_'+group_name)
+    # def online_user_count(self,group_name,action):
+    #     if action == 'INCR':
+    #         print('inc')
+    #         cache.incr('user_count_'+group_name)
+    #     elif action == 'DECR':
+    #         cache.decr('user_count_'+group_name)
+    #         print('dec')
+    #     return cache.get('user_count_'+group_name)
 
     async def connect(self):
         print("web socket connected....")
@@ -303,7 +369,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         online_users=None
         if int(cache.get('user_count_'+str(self.group_name)))<5:
-            online_users=self.online_user_count(str(self.group_name),'INCR')
+            online_users=online_user_count(str(self.group_name),'INCR')
         elif int(cache.get('user_count_'+str(self.group_name)))==5:
             print('5 user connected')
             # Reject the connection
@@ -341,7 +407,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             isQuizEnd=data["endQuiz"]
             print(isQuizEnd)
             if isQuizEnd:
-                await database_sync_to_async(self.is_quiz_ending)(room)
+                await database_sync_to_async(is_quiz_ending)(room)
                 response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name),"endQuiz":True}
                 await self.channel_layer.group_send(self.group_name, response)
                 await self.disconnect(code=1001)
@@ -355,7 +421,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
             chat = Chat(content=message, room=room)
             await database_sync_to_async(chat.save)()
             #broadcasting
-            response = {"type": "chat.message", "message": message,"count":cache.get('user_count_'+self.group_name),"endQuiz":False}
+            response = {"type": "chat.message", "message": quiz_data,"count":cache.get('user_count_'+self.group_name),"endQuiz":False}
             await self.channel_layer.group_send(self.group_name, response)
         except Exception as e:
             print('error found',e)
@@ -370,7 +436,7 @@ class CustomAsyncConsumer(AsyncWebsocketConsumer):
         print("channel_name " + self.channel_name)
         print("channel_layer ", self.channel_layer)
         try:
-            online_users=self.online_user_count(self.group_name,'DECR')
+            online_users=online_user_count(self.group_name,'DECR')
         except:
             online_users=0
         await self.channel_layer.group_discard(self.group_name, self.channel_name)

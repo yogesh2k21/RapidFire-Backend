@@ -4,7 +4,7 @@ from room.models import Quiz,Room,Score
 # Create your views here.
 def quiz_dashboard(request):
     try:        
-        quizes=Quiz.objects.filter(host=request.user).order_by('-datetime')
+        quizes=Quiz.objects.filter(host=request.user).order_by('-id')
         print(quizes)
         return render(request,'dashboard.html',{"quizes":quizes})
     except Exception as e:
