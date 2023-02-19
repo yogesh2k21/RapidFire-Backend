@@ -1,0 +1,11 @@
+version: '3'  # specify docker-compose version
+services: # services means the containers
+
+  backend:
+    build: .  # dockerfile path
+    container_name: django-backend
+    image: backend:latest # image name
+    environment:  # environment variables that passing in the backend Dockerfile
+      PORT: 8000
+    ports:  # port binding of container to host
+      - "8000:8000"

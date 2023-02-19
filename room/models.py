@@ -52,23 +52,3 @@ class Score(models.Model):
             verbose_name_plural = "Scores"
     def __str__(self) -> str:
         return f'username - {self.user.username} | room - {self.room.name} | point - {self.point}'
-
-
-
-'''
-class MCQ(models.Model):
-    problem_statement=models.CharField(max_length=250)
-    # options=models.ManyToManyField(Option)
-    correct=models.ForeignKey('Option', on_delete=models.CASCADE)
-
-class Option(models.Model):
-    question=models.ForeignKey(MCQ,on_delete=models.CASCADE)
-    statement=models.CharField(max_length=150)
-    valid=models.BooleanField(default=False)
-
-class Quiz(models.Model):
-    room=models.OneToOneField(Room, on_delete=models.CASCADE)
-    questions=models.ManyToManyField(MCQ)
-    datetime=models.DateField(auto_now_add=True)
-    completed=models.BooleanField(default=False)
-'''

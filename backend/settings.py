@@ -28,10 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS=['localhost','*','192.168.1.104']
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-       'http://localhost:8000',
-       'http://192.168.1.104:8000',
-)
+# CORS_ORIGIN_WHITELIST = (
+#        'http://localhost:8000',
+#        'http://192.168.1.104:8000',
+# )
 
 # Application definition
 
@@ -159,6 +159,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
+            # "hosts": [("127.0.0.1", 6379)],
             "hosts": [("localhost", 6379)],
         },
     },
