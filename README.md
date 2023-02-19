@@ -37,6 +37,8 @@ For quiz hosts or teachers, we have developed a web portal using Django, a popul
 
 ## How its Works 🏃‍♂️🏃‍♀️
 
+The host creates a quiz and sends a unique quiz ID to the participants, which they can enter on their phones to connect to the quiz.
+
 The quiz application has two modes: automatic and custom. In the automatic mode, there is no limit to the number of participants and questions are read and thrown from an Excel sheet. The host selects the questions and the questions are sent to the participants' phones in real-time. 
 
 In the custom mode,there is a limit of 5 participants, and the host needs to wait until all 5 participants are connected before sending questions and after everyone connected host has to thrown manually by typing them into the web portal. In both modes, the participants can answer multiple-choice questions in real-time and see their results as the quiz progresses. The application is user-friendly, accessible from any device, and employs the latest security protocols to ensure a secure and reliable experience.
