@@ -1,15 +1,15 @@
-# IQ Tester - Real-Time Quiz Application   🔗 [Live Link](http://65.2.190.143:8000/)
+# RapidFire - Real-Time Quiz Application   🔗 [Live Link](http://65.2.190.143:8000/)
 
-Say goodbye to boring, outdated quizzes, and hello to the future of interactive and engaging quizzes with IQ Tester
+Say goodbye to boring, outdated quizzes, and hello to the future of interactive and engaging quizzes with RapidFire
 
-`IQ Tester` - `Real-Time` Quiz Application! Our application is perfect for anyone who wants to create and conduct engaging quizzes in `real-time`. 
+`RapidFire` - `Real-Time` Quiz Application! Our application is perfect for anyone who wants to create and conduct engaging quizzes in `real-time`. 
 With our user-friendly platform, you can easily `customize` your quizzes with your own questions. 
 The application is highly customizable, making it ideal for use in `schools`, `colleges`, `contests`, and other educational events. 
-IQ Tester - Real-Time Quiz Application offers real-time updates, making the quiz more interactive and engaging for participants. 
+RapidFire - Real-Time Quiz Application offers real-time updates, making the quiz more interactive and engaging for participants. 
 
 Our state-of-the-art technology ensures real-time updates, so participants can see quiz questions and results as they happen. And with our robust security protocols, you can rest assured that your quizzes are secure and reliable.
 
-Whether you're a teacher, contest organizer, or quiz enthusiast, IQ Tester - Real-Time Quiz Application is the perfect tool for conducting fun, engaging, and interactive quizzes. Get started today and revolutionize the way you conduct quizzes!
+Whether you're a teacher, contest organizer, or quiz enthusiast, RapidFire - Real-Time Quiz Application is the perfect tool for conducting fun, engaging, and interactive quizzes. Get started today and revolutionize the way you conduct quizzes!
 
 Get started today and revolutionize the way you conduct quizzes!
 
@@ -17,7 +17,7 @@ https://user-images.githubusercontent.com/52989607/177797914-d17ae50e-a83a-491e-
 
 ## Purpose and Goals 🎯
 
-The purpose of the IQ Tester - Real-Time Quiz Application is to provide an engaging and interactive platform for creating and conducting multiple-choice quizzes in real-time. 
+The purpose of the RapidFire - Real-Time Quiz Application is to provide an engaging and interactive platform for creating and conducting multiple-choice quizzes in real-time. 
 Our application is designed to be user-friendly, highly customizable, and accessible for everyone. Whether you're a teacher, student, or quiz enthusiast, 
 our application makes it easy for you to create and manage quizzes on the fly.
 
@@ -31,7 +31,7 @@ The goals of this project are to:
 
 ## What we have Developed 🔨⚒️
 
-For students and contestants, we have developed a mobile application using React Native -> [Application Github Link](https://github.com/yogesh2k21/IQ-Tester-Frontend), a popular cross-platform mobile app development framework. By leveraging React Native, we are able to create a highly responsive and interactive mobile app that works seamlessly on both iOS and Android platforms. React Native also offers a range of customizable features and native-like performance, making it an ideal framework for creating the IQ Tester mobile app. With our React Native-based mobile app, participants can easily and conveniently take part in quizzes from their smartphones, making it more accessible and user-friendly.
+For students and contestants, we have developed a mobile application using React Native -> [Application Github Link](https://github.com/yogesh2k21/RapidFire-Frontend), a popular cross-platform mobile app development framework. By leveraging React Native, we are able to create a highly responsive and interactive mobile app that works seamlessly on both iOS and Android platforms. React Native also offers a range of customizable features and native-like performance, making it an ideal framework for creating the RapidFire mobile app. With our React Native-based mobile app, participants can easily and conveniently take part in quizzes from their smartphones, making it more accessible and user-friendly.
 
 For quiz hosts or teachers, we have developed a web portal using Django, a popular Python-based web development framework. Our web portal is accessible from any web browser, making it easy to use and accessible from any device. Using the web portal, quiz hosts can easily create and customize quizzes, upload questions, and set up multiple-choice questions. They can also manage the quiz in real-time, including starting and ending the quiz, tracking participants' progress, and viewing quiz results even after Quiz Ends. With our Django-based web portal, quiz hosts can conduct quizzes seamlessly and efficiently, making it an ideal tool for use in schools, colleges, and contests.
 
@@ -117,7 +117,7 @@ Note: The application has been tested on Linux and macOS, but it should also run
 
 ## Installation & Setup 🏭
 
-To set up and install our containerized IQ Tester backend using Docker, follow these steps:
+To set up and install our containerized RapidFire backend using Docker, follow these steps:
 
 - Clone the GitHub repository to your local machine
 - Navigate to the project directory
@@ -129,12 +129,12 @@ Note: The entire application has been containerized using Docker, ensuring that 
 
 ## Hosting & Deployment ☁️
 
-This IQ Tester platform's backend has been hosted on Amazon EC2 as part of my journey to learn about AWS and containerized using Docker.
+This RapidFire platform's backend has been hosted on Amazon EC2 as part of my journey to learn about AWS and containerized using Docker.
 By using Docker, the application has been packaged into a container that can be easily moved between development, testing, and production environments.
 AWS provides a wide range of cloud computing services, and hosting this application on EC2 has been a great opportunity to dive deeper into the platform. 
 By hosting on EC2, I was able to gain hands-on experience with cloud computing and improve my skills in this area.
 
 ## END
 
-Thank you for taking the time to review this IQ Tester platform project. Your feedback and support are greatly appreciated. If you have any questions or comments, please feel free to reach out.
+Thank you for taking the time to review this RapidFire platform project. Your feedback and support are greatly appreciated. If you have any questions or comments, please feel free to reach out.
 
