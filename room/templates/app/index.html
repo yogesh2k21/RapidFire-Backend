@@ -50,19 +50,19 @@
         ws.send(JSON.stringify({ status: "Client Connected" }))
       };
 
-      ws.onmessage = (e) => {
+      {% comment %} ws.onmessage = (e) => {
         console.log("message received from server..\n", e.data);
         const data = JSON.parse(e.data);
         document.querySelector("#chat-log").value += data.message + "\n";
         
         document.getElementById("chat-log").scrollTop = 1000;
-      };
+      }; {% endcomment %}
 
-      document.getElementById("chat-message-submit").onclick = (e) => {
+      {% comment %} document.getElementById("chat-message-submit").onclick = (e) => {
         const message = document.getElementById("chat-message-input").value;
         ws.send(JSON.stringify({ message: message }));
         document.getElementById("chat-message-input").value = "";
-      };
+      }; {% endcomment %}
       // ws.onerror=(e)=>{
       //     console.log('websocket error..',e);
       // }
