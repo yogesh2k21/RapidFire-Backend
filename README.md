@@ -1,4 +1,4 @@
-# RapidFire - Real-Time Quiz Application   🔗 [Live Link](http://65.2.190.143:8000/)
+# RapidFire - Real-Time Quiz Application   🔗 [Live Link](http://65.2.190.143:8000/account/host-login/)
 
 Say goodbye to boring, outdated quizzes, and hello to the future of interactive and engaging quizzes with RapidFire
 
