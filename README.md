@@ -45,24 +45,22 @@ In the custom mode,there is a limit of 5 participants, and the host needs to wai
 
 ## Screenshots
 
-![Screenshot (300)](https://user-images.githubusercontent.com/52989607/219969855-818c332b-f8d8-4e25-9402-48df959d3e68.png)
+![Screenshot (317)](https://user-images.githubusercontent.com/52989607/220836694-2cf22e6f-1b53-48bd-94cb-3909fd1dfb9d.png)
 <p align="center">
 Home Page
 </p>
 
-![Screenshot (295)](https://user-images.githubusercontent.com/52989607/219969879-867860a9-6cf8-4df7-acf0-c49ee42b2fb2.png)
+![Screenshot (318)](https://user-images.githubusercontent.com/52989607/220836810-97e61068-0258-4e78-99f5-4b58398a8c34.png)
 <p align="center">
 Excel Sheet
 </p>
 
-
-![Screenshot (296)](https://user-images.githubusercontent.com/52989607/219969888-9d1229f6-ba4d-4b3c-a05e-655151ced622.png)
+![Screenshot (319)](https://user-images.githubusercontent.com/52989607/220836848-3cab7483-deaa-4ea5-949b-340fa7452c0a.png)
 <p align="center">
 Custom MCQ Quiz
 </p>
 
-
-![Screenshot (297)](https://user-images.githubusercontent.com/52989607/219969899-6db8e1a1-3265-4adb-aec3-44ce5ab6b6cb.png)
+![Screenshot (320)](https://user-images.githubusercontent.com/52989607/220836867-f8fb874d-1fd3-4bd5-8560-e152a229cc7d.png)
 <p align="center">
 Old quizes Details
 </p>
@@ -91,6 +89,21 @@ For the mobile app:
 - Secure and reliable with token-based authentication for web socket connection
 - User-friendly and intuitive, no tech expertise required
 - Accessible from any device with the mobile app installed
+
+## Authentication with Django Channels and Websockets 🔐
+
+To ensure that only authorized users can access and participate in quizzes, we implemented token authentication using Django Channels and Websockets. This allows us to verify the identity of participants before they can join a quiz.
+Using token authentication in Django Channels is a common approach for securing WebSocket connections. It's good practice to authenticate WebSocket connections in order to restrict access to certain functionality to authenticated users only.
+
+When a user logs in or registers, a token is generated for that user. This token is then stored in the browser's localStorage, and is used to authenticate the user when they connect to a quiz using the mobile app or web portal.
+
+`ws://localhost:8000/?token=fkdsahjkfshiadjkfhoasdfk"`
+
+The link we provided appears to be a WebSocket URL for a local development server running on port 8000 with a token query parameter. This type of URL is typically used to establish a WebSocket connection between a client (such as a browser) and a server that supports WebSocket communication.
+
+With token authentication in place, we can ensure that only authorized users can access and participate in quizzes, and that quiz results are recorded accurately and securely.
+
+To provide secure authentication for our host portal, we've implemented a dual-layer approach. Users can log in using traditional session-based authentication for the regular site. However, for WebSocket connections used for real-time functionality, we utilize Django Token authentication to ensure end-to-end encryption and secure communication.
 
 ## Tools ⚒️ and Tech Stack 🧑‍💻
 
