@@ -13,6 +13,8 @@ Whether you're a teacher, contest organizer, or quiz enthusiast, RapidFire - Rea
 
 Get started today and revolutionize the way you conduct quizzes!
 
+## Demo 🎦🎥
+
 https://user-images.githubusercontent.com/52989607/220909411-949604b7-fb7d-49b3-affa-0e844370bdd2.mp4
 
 ## Purpose and Goals 🎯
