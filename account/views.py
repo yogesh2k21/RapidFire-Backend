@@ -9,21 +9,21 @@ from django.contrib.auth import authenticate, login,logout
 
 def host_login(request):
     if request.POST:
+        if request.POST['username']=='' or request.POST['password']=='': 
+            print('Required Credentials are not given')
+            return render(request,'login.html')
         username = request.POST['username']
         password = request.POST['password']
-        print(request.POST['username'])
-        print(request.POST['password'])
+        print('username ',request.POST['username'])
+        print('password ',request.POST['password'])
         user = authenticate(request, username=username, password=password)
         print(user)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
-            # redirect('home')
+            print('redirecting to home page')
             return HttpResponseRedirect(reverse('home'))
         else:
-            # Return an 'invalid login' error message.
             print('user not exists')
-            #message framework add krna h
             return render(request,'login.html')
     else:
         return render(request,'login.html')
